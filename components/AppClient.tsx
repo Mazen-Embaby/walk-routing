@@ -1,7 +1,4 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+"use client";
 
 import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, useMap, GeoJSON } from 'react-leaflet';
@@ -56,7 +53,7 @@ function MapViewFitter({ route, start, end }: { route: RouteData | null, start: 
   return null;
 }
 
-export default function App() {
+export default function AppClient() {
   const [startPos, setStartPos] = useState<[number, number]>([30.057766, 31.345850]);
   const [endPos, setEndPos] = useState<[number, number]>([30.057821, 31.345571]);
   const [engine, setEngine] = useState<string>('osrm');
@@ -74,15 +71,36 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/route?engine=${selectedEngine}&start=${start[0]},${start[1]}&end=${end[0]},${end[1]}`);
-      const data = await res.json();
-      
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to fetch route');
-      }
+      if (selectedEngine === 'osrm') {
+        // Fetch directly from the OSRM public API instead of our backend
+        const osrmUrl = `https://router.project-osrm.org/route/v1/foot/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=geojson`;
+        const res = await fetch(osrmUrl);
+        const data = await res.json();
+        
+        if (data.code !== 'Ok') {
+          throw new Error('OSRM routing failed: ' + data.message);
+        }
 
-      setRoute(data);
-      setRouteKey(Date.now()); // Update route key to force remount
+        const route = data.routes[0];
+        setRoute({
+          engine: 'OSRM (Direct)',
+          distance: route.distance, // in meters
+          duration: route.duration, // in seconds
+          geometry: route.geometry, // GeoJSON LineString
+        });
+        setRouteKey(Date.now()); // Update route key to force remount
+      } else {
+        // Fetch from the renamed backend endpoint
+        const res = await fetch(`/api/walk-route?engine=${selectedEngine}&start=${start[0]},${start[1]}&end=${end[0]},${end[1]}`);
+        const data = await res.json();
+        
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to fetch route');
+        }
+
+        setRoute(data);
+        setRouteKey(Date.now()); // Update route key to force remount
+      }
     } catch (err: any) {
       console.error(err);
       setError(err.message);
@@ -140,12 +158,12 @@ export default function App() {
         <div className="p-6 flex-1 bg-slate-50/50 flex flex-col">
           <label className="text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-3 block">Routing Engine</label>
           <div className="space-y-2 mb-6">
-            {[
+            {([
               { id: 'osrm', label: 'OSRM Walk Engine' },
               { id: 'mapbox', label: 'Mapbox API (Requires Key)' },
               { id: 'graphhopper', label: 'GraphHopper (Requires Key)' },
               { id: 'google', label: 'Google Maps (Requires Key)' }
-            ].map(eng => {
+            ] as { id: string, label: string, disabled?: boolean }[]).map(eng => {
               const isActive = engine === eng.id;
               return (
                 <button 
