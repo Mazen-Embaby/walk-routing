@@ -1,0 +1,10 @@
+{
+  "name": "Cairo Route Planner Planner",
+  "description": "Interactive web app to plan walking routes in Cairo using different routing engines (OSRM, Mapbox, GraphHopper, etc). Drag and drop markers to update routes in real-time.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
