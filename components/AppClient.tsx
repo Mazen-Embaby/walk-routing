@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { MapContainer, TileLayer, Marker, useMap, GeoJSON } from 'react-leaflet';
 import L from 'leaflet';
-import { Settings, Navigation, AlertCircle, Loader2, MapPin, Footprints, Clock, Activity, LogOut } from 'lucide-react';
+import { Settings, Navigation, AlertCircle, Loader2, MapPin, Footprints, Clock, Activity, LogOut, Mic, Search } from 'lucide-react';
 
 const startIcon = L.divIcon({
   html: `<div style="width: 20px; height: 20px; border-radius: 50%; background-color: #22c55e; border: 3px solid white; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);"></div>`,
@@ -187,13 +188,36 @@ export default function AppClient() {
               </div>
               <h1 className="text-xl font-bold text-slate-900 tracking-tight">CairoWalker</h1>
             </div>
-            <button 
-              onClick={handleLogout}
-              className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
-              title="Logout"
-            >
-              <LogOut size={18} />
-            </button>
+            <div className="flex items-center gap-1">
+              <Link 
+                href="/test-traffic"
+                className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
+                title="Traffic Multi-Waypoint Router"
+              >
+                <Activity size={18} />
+              </Link>
+              <Link 
+                href="/test-search"
+                className="p-2 text-slate-400 hover:text-blue-600 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
+                title="Geocoding Search"
+              >
+                <Search size={18} />
+              </Link>
+              <Link 
+                href="/test-speech"
+                className="p-2 text-slate-400 hover:text-blue-600 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
+                title="Audio Portal (TTS / STT)"
+              >
+                <Mic size={18} />
+              </Link>
+              <button 
+                onClick={handleLogout}
+                className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                title="Logout"
+              >
+                <LogOut size={18} />
+              </button>
+            </div>
           </div>
 
           <div className="space-y-4">
