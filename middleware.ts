@@ -6,7 +6,14 @@ export function middleware(request: NextRequest) {
   const hasSession = request.cookies.has('app_session');
 
   // Define public paths that don't require authentication
-  const isPublicPath = path === '/login' || path.startsWith('/api/auth');
+  const isPublicPath = 
+    path === '/login' || 
+    path.startsWith('/api/auth') ||
+    path.startsWith('/api/walk-route') ||
+    path.startsWith('/api/traffic-route') ||
+    path.startsWith('/api/search') ||
+    path.startsWith('/api/stt') ||
+    path.startsWith('/api/tts');
 
   // If it's a public path and the user is authenticated, redirect them to the home page
   if (isPublicPath && hasSession && path === '/login') {
