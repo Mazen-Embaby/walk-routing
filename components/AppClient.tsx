@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, useMap, GeoJSON } from 'react-leaflet';
 import L from 'leaflet';
-import { Settings, Navigation, AlertCircle, Loader2, MapPin, Footprints, Clock, Activity } from 'lucide-react';
+import { Settings, Navigation, AlertCircle, Loader2, MapPin, Footprints, Clock, Activity, LogOut } from 'lucide-react';
 
 const startIcon = L.divIcon({
   html: `<div style="width: 20px; height: 20px; border-radius: 50%; background-color: #22c55e; border: 3px solid white; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);"></div>`,
@@ -124,17 +124,35 @@ export default function AppClient() {
     fetchRoute(startPos, [position.lat, position.lng], engine);
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      window.location.href = '/login';
+    } catch (err) {
+      console.error('Failed to logout:', err);
+    }
+  };
+
   return (
     <div className="flex h-screen w-full bg-[#F8FAFC] font-sans overflow-hidden flex-col md:flex-row">
       {/* Sidebar Controls */}
       <aside className="w-full md:w-80 bg-white border-b md:border-r border-slate-200 flex flex-col z-[1000] shadow-xl shrink-0 overflow-y-auto">
         
         <div className="p-6 border-b border-slate-100 bg-white">
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+              </div>
+              <h1 className="text-xl font-bold text-slate-900 tracking-tight">CairoWalker</h1>
             </div>
-            <h1 className="text-xl font-bold text-slate-900 tracking-tight">CairoWalker</h1>
+            <button 
+              onClick={handleLogout}
+              className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
+              title="Logout"
+            >
+              <LogOut size={18} />
+            </button>
           </div>
 
           <div className="space-y-4">
