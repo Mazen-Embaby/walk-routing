@@ -53,15 +53,38 @@ function MapViewFitter({ route, start, end }: { route: RouteData | null, start: 
   return null;
 }
 
+const parseCoords = (val: string): [number, number] | null => {
+  const parts = val.split(',').map(p => p.trim());
+  if (parts.length === 2) {
+    const lat = Number(parts[0]);
+    const lng = Number(parts[1]);
+    if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+      return [lat, lng];
+    }
+  }
+  return null;
+};
+
 export default function AppClient() {
   const [startPos, setStartPos] = useState<[number, number]>([30.057766, 31.345850]);
   const [endPos, setEndPos] = useState<[number, number]>([30.057821, 31.345571]);
+  const [startInput, setStartInput] = useState<string>('');
+  const [endInput, setEndInput] = useState<string>('');
   const [engine, setEngine] = useState<string>('osrm');
   
   const [route, setRoute] = useState<RouteData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [routeKey, setRouteKey] = useState<number>(Date.now());
+
+  // Sync position state to text inputs when positions change (e.g. on marker drag)
+  useEffect(() => {
+    setStartInput(`${startPos[0].toFixed(6)}, ${startPos[1].toFixed(6)}`);
+  }, [startPos]);
+
+  useEffect(() => {
+    setEndInput(`${endPos[0].toFixed(6)}, ${endPos[1].toFixed(6)}`);
+  }, [endPos]);
 
   useEffect(() => {
     fetchRoute(startPos, endPos, engine);
@@ -124,6 +147,24 @@ export default function AppClient() {
     fetchRoute(startPos, [position.lat, position.lng], engine);
   };
 
+  const handleStartInputChange = (val: string) => {
+    setStartInput(val);
+    const parsed = parseCoords(val);
+    if (parsed) {
+      setStartPos(parsed);
+      fetchRoute(parsed, endPos, engine);
+    }
+  };
+
+  const handleEndInputChange = (val: string) => {
+    setEndInput(val);
+    const parsed = parseCoords(val);
+    if (parsed) {
+      setEndPos(parsed);
+      fetchRoute(startPos, parsed, engine);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
@@ -160,14 +201,26 @@ export default function AppClient() {
               <label className="text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 block">Start Point</label>
               <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></div>
-                <input type="text" value={`${startPos[0].toFixed(6)}, ${startPos[1].toFixed(6)}`} className="bg-transparent text-sm text-slate-700 outline-none w-full" readOnly />
+                <input 
+                  type="text" 
+                  value={startInput} 
+                  onChange={(e) => handleStartInputChange(e.target.value)} 
+                  className="bg-transparent text-sm text-slate-700 outline-none w-full" 
+                  placeholder="lat, lng"
+                />
               </div>
             </div>
             <div className="relative">
               <label className="text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-1 block">Destination</label>
               <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
                 <div className="w-2 h-2 rounded-full bg-rose-500 shrink-0"></div>
-                <input type="text" value={`${endPos[0].toFixed(6)}, ${endPos[1].toFixed(6)}`} className="bg-transparent text-sm text-slate-700 outline-none w-full" readOnly />
+                <input 
+                  type="text" 
+                  value={endInput} 
+                  onChange={(e) => handleEndInputChange(e.target.value)} 
+                  className="bg-transparent text-sm text-slate-700 outline-none w-full" 
+                  placeholder="lat, lng"
+                />
               </div>
             </div>
           </div>
