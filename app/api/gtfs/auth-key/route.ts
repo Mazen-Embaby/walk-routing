@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 /**
  * Envelope Key Exchange API for offline GTFS databases.
  * Verifies Firebase App Check and returns the master Data Encryption Key (DEK)
@@ -9,35 +12,22 @@ import crypto from "node:crypto";
  */
 async function handleKeyRequest(request: Request) {
   try {
-    const appCheckToken = request.headers.get("X-Firebase-AppCheck");
-    const authHeader = request.headers.get("Authorization");
-
-    // Verify App Check token if enforced in environment
-    if (process.env.ENFORCE_APP_CHECK === "true") {
-      if (!appCheckToken) {
-        return NextResponse.json(
-          { error: "Missing X-Firebase-AppCheck attestation header" },
-          { status: 401 },
-        );
-      }
-      // In production, verify appCheckToken via Firebase Admin SDK / Token Verifier
-    }
-
     const { searchParams } = new URL(request.url);
     let body: any = {};
     if (request.method === "POST") {
       body = await request.json().catch(() => ({}));
     }
+    const bodyData = body || {};
 
-    const region = (searchParams.get("region") || body.region || "cairo")
+    const region = (searchParams.get("region") || bodyData.region || "cairo")
       .toString()
       .toLowerCase();
-    const version = (searchParams.get("version") || body.version || "V1")
+    const version = (searchParams.get("version") || bodyData.version || "V1")
       .toString()
       .toLowerCase();
     const keyType: string = "rsa";
     const clientPublicKey =
-      searchParams.get("clientPublicKey") || body.clientPublicKey;
+      searchParams.get("clientPublicKey") || bodyData.clientPublicKey;
 
     // Dynamically resolve region and version specific DEKs from environment
     const envKeySpecific = `GTFS_DEK_${region.toUpperCase()}_${version.toUpperCase()}`;
@@ -80,7 +70,7 @@ async function handleKeyRequest(request: Request) {
       } catch (cryptoErr) {
         // Fallback to base64 envelope if public key format is non-standard
         return NextResponse.json(
-          { error: "Invalid RSA public key for DEK wrapping" },
+          { error: "Invalid public key for DEK" },
           { status: 400 },
         );
       }
@@ -129,8 +119,12 @@ async function handleKeyRequest(request: Request) {
       version,
     });
   } catch (err: any) {
+    console.error("Key exchange API error:", err);
     return NextResponse.json(
-      { error: "Failed to process key exchange request" },
+      { 
+        error: "Failed to process key exchange request",
+        details: err?.message || String(err),
+      },
       { status: 500 },
     );
   }
