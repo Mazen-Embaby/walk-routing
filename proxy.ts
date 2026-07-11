@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const hasSession = request.cookies.has('app_session');
 
@@ -13,6 +13,7 @@ export function middleware(request: NextRequest) {
     path.startsWith('/api/traffic-route') ||
     path.startsWith('/api/search') ||
     path.startsWith('/api/stt') ||
+    path.startsWith('/api/gtfs') ||
     path.startsWith('/api/tts');
 
   // If it's a public path and the user is authenticated, redirect them to the home page
