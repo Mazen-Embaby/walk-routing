@@ -1,26 +1,9 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { initializeApp, getApps, cert } from 'firebase-admin/app';
-import { getAppCheck } from 'firebase-admin/app-check';
+import { createRemoteJWKSet, jwtVerify } from 'jose';
 
-// Ensure Firebase Admin is initialized strictly once across invocations
-function ensureFirebaseAdminInitialized() {
-  if (!getApps().length) {
-    try {
-      if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
-        // Option A: Parse inline JSON string from .env (ideal for serverless/Vercel)
-        initializeApp({
-          credential: cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY)),
-        });
-      } else {
-        // Option B: Uses GOOGLE_APPLICATION_CREDENTIALS file path from .env automatically
-        initializeApp();
-      }
-    } catch (err) {
-      console.error('Firebase Admin initialization warning:', err);
-    }
-  }
-}
+// Google Firebase App Check public keys JWKS endpoint (fully compatible with Edge / Web Handlers)
+const APP_CHECK_JWKS = createRemoteJWKSet(new URL('https://firebaseappcheck.googleapis.com/v1/jwks'));
 
 export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -47,12 +30,12 @@ export async function proxy(request: NextRequest) {
     }
 
     try {
-      ensureFirebaseAdminInitialized();
-      await getAppCheck().verifyToken(appCheckToken);
+      // Verify JWT token signature at the edge using Google's public JWKS keys
+      await jwtVerify(appCheckToken, APP_CHECK_JWKS);
       return NextResponse.next();
 
     } catch (err) {
-      console.error('App Check token verification failed:', err);
+      console.error('App Check token verification failed at edge:', err);
       return new NextResponse(
         JSON.stringify({ error: 'Invalid X-Firebase-AppCheck attestation token' }),
         { status: 401, headers: { 'content-type': 'application/json' } }
