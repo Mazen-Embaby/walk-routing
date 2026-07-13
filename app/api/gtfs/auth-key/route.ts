@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
+import { getRegionConfig } from "../config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,28 +20,44 @@ async function handleKeyRequest(request: Request) {
     }
     const bodyData = body || {};
 
-    const region = (searchParams.get("region") || bodyData.region || "cairo")
-      .toString()
-      .toLowerCase();
-    const version = (searchParams.get("version") || bodyData.version || "V1")
-      .toString()
-      .toLowerCase();
+    const country = searchParams.get("country") || bodyData.country;
+    const region = searchParams.get("region") || bodyData.region;
+    const version = searchParams.get("version") || bodyData.version;
+
+    if (
+      !country ||
+      !region ||
+      version === null ||
+      version === undefined ||
+      version === ""
+    ) {
+      return NextResponse.json(
+        { error: "Missing required parameters: country, region, version" },
+        { status: 400 },
+      );
+    }
+
+    const countryCode = country.toString().toUpperCase();
+    const cleanRegion = region.toString().toLowerCase();
+    const parsedVersion = !isNaN(Number(version))
+      ? Number(version)
+      : version.toString();
+
     const keyType: string = "rsa";
     const clientPublicKey =
       searchParams.get("clientPublicKey") || bodyData.clientPublicKey;
 
-    // Dynamically resolve region and version specific DEKs from environment
-    const envKeySpecific = `GTFS_DEK_${region.toUpperCase()}_${version.toUpperCase()}`;
-    const envKeyRegion = `GTFS_DEK_${region.toUpperCase()}`;
-    const masterDek =
-      process.env[envKeySpecific] ||
-      process.env[envKeyRegion] ||
-      process.env.GTFS_MASTER_DEK;
+    // Dynamically resolve region and version specific DEK strictly from GTFS_CATALOG Map
+    const masterDek = getRegionConfig(
+      countryCode,
+      cleanRegion,
+      parsedVersion,
+    )?.dek;
 
     if (!masterDek) {
       return NextResponse.json(
         {
-          error: `No DEK configured for specified region '${region}' and version '${version}'`,
+          error: `No DEK configured for country '${countryCode}', region '${cleanRegion}', version '${parsedVersion}'`,
         },
         { status: 404 },
       );
@@ -121,7 +138,7 @@ async function handleKeyRequest(request: Request) {
   } catch (err: any) {
     console.error("Key exchange API error:", err);
     return NextResponse.json(
-      { 
+      {
         error: "Failed to process key exchange request",
         details: err?.message || String(err),
       },

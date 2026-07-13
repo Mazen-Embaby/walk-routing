@@ -44,14 +44,26 @@ export async function proxy(request: NextRequest) {
   }
 
   // 3. Session Authentication & Path Access Control
-
   // If authenticated user tries to access /login, redirect to home
   if (hasSession && path === '/login') {
     return NextResponse.redirect(new URL('/', request.url));
   }
+  if (!hasSession && path === '/login') {
+    return NextResponse.next();
+  }
 
-  const isPublicPath = 
-    path === '/login' || 
+  if (process.env.ENFORCE_APP_CHECK === 'false' && path.startsWith('/api/')){
+    return NextResponse.next();
+  }
+
+  if (!hasSession) {
+    return new NextResponse(
+        JSON.stringify({ error: 'Authentication required' }),
+        { status: 401, headers: { 'content-type': 'application/json' } }
+      );
+  }
+  const isProtectedPath = 
+    path.startsWith('') ||
     path.startsWith('/api/auth') ||
     path.startsWith('/api/walk-route') ||
     path.startsWith('/api/traffic-route') ||
@@ -59,17 +71,6 @@ export async function proxy(request: NextRequest) {
     path.startsWith('/api/stt') ||
     path.startsWith('/api/gtfs') ||
     path.startsWith('/api/tts');
-
-  // If unauthenticated user tries to access a protected path
-  if (!isPublicPath && !hasSession) {
-    if (path.startsWith('/api/')) {
-      return new NextResponse(
-        JSON.stringify({ error: 'Authentication required' }),
-        { status: 401, headers: { 'content-type': 'application/json' } }
-      );
-    }
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
 
   return NextResponse.next();
 }
