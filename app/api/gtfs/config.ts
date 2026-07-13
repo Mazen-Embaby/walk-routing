@@ -60,7 +60,7 @@ export function getCatalogMap(): GtfsCatalogMap {
 export function getRegionConfig(
   countryCode: string,
   region: string,
-  version: number | string | null,
+  version: string | null,
 ): RegionVersionConfig | null {
   const catalog = getCatalogMap();
   const regionConfig = catalog[countryCode]?.regions?.[region];
@@ -74,8 +74,7 @@ export function getRegionConfig(
 
   // Fallback to the latest available version
   const latestVersion = Object.keys(regionConfig)
-    .map(Number)
-    .sort((a, b) => b - a)[0];
+    .sort((a, b) => b.localeCompare(a))[0];
 
   return latestVersion !== undefined
     ? regionConfig[latestVersion.toString()]

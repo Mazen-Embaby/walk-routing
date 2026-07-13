@@ -1,28 +1,47 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { createRemoteJWKSet, jwtVerify } from 'jose';
+import { initializeApp, getApps, cert } from 'firebase-admin/app';
+import { getAppCheck } from "firebase-admin/app-check";
 
-// Google Firebase App Check public keys JWKS endpoint (fully compatible with Edge / Web Handlers)
-const APP_CHECK_JWKS = createRemoteJWKSet(new URL('https://firebaseappcheck.googleapis.com/v1/jwks'));
+function ensureFirebaseAdmin() {
+
+
+  if (getApps().length === 0) {
+    const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+    if (serviceAccountKey) {
+      try {
+        const serviceAccount = JSON.parse(serviceAccountKey);
+        initializeApp({
+          credential: cert(serviceAccount),
+        });
+      } catch (err) {
+        console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT_KEY:', err);
+        initializeApp();
+      }
+    } else {
+      initializeApp();
+    }
+  }
+}
 
 export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   // 1. Allow static assets, images, and next internals to bypass early
-  const isAsset = 
-    path.startsWith('/_next') || 
-    path.includes('.') || 
+  const isAsset =
+    path.startsWith('/_next') ||
+    path.includes('.') ||
     path.startsWith('/static');
   if (isAsset) {
     return NextResponse.next();
   }
 
-    const hasSession = request.cookies.has('app_session');
+  const hasSession = request.cookies.has('app_session');
 
   // 2. Global Firebase App Check validation for API requests
   if (process.env.ENFORCE_APP_CHECK === 'true' && path.startsWith('/api/') && !hasSession) {
-    const appCheckToken = request.headers.get('X-Firebase-AppCheck');
-    if (!appCheckToken) {
+    const token = request.headers.get('X-Firebase-AppCheck');
+    if (!token) {
       return new NextResponse(
         JSON.stringify({ error: 'Missing X-Firebase-AppCheck attestation header' }),
         { status: 401, headers: { 'content-type': 'application/json' } }
@@ -30,12 +49,12 @@ export async function proxy(request: NextRequest) {
     }
 
     try {
-      // Verify JWT token signature at the edge using Google's public JWKS keys
-      await jwtVerify(appCheckToken, APP_CHECK_JWKS);
+      ensureFirebaseAdmin();
+      await getAppCheck().verifyToken(token!);
       return NextResponse.next();
 
     } catch (err) {
-      console.error('App Check token verification failed at edge:', err);
+      console.error('App Check token verification failed:', err);
       return new NextResponse(
         JSON.stringify({ error: 'Invalid X-Firebase-AppCheck attestation token' }),
         { status: 401, headers: { 'content-type': 'application/json' } }
@@ -52,17 +71,17 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (process.env.ENFORCE_APP_CHECK === 'false' && path.startsWith('/api/')){
+  if (process.env.ENFORCE_APP_CHECK === 'false' && path.startsWith('/api/')) {
     return NextResponse.next();
   }
 
   if (!hasSession) {
     return new NextResponse(
-        JSON.stringify({ error: 'Authentication required' }),
-        { status: 401, headers: { 'content-type': 'application/json' } }
-      );
+      JSON.stringify({ error: 'Authentication required' }),
+      { status: 401, headers: { 'content-type': 'application/json' } }
+    );
   }
-  const isProtectedPath = 
+  const isProtectedPath =
     path.startsWith('') ||
     path.startsWith('/api/auth') ||
     path.startsWith('/api/walk-route') ||
