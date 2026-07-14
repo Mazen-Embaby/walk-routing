@@ -68,7 +68,7 @@ async function getSignedCdnUrl(urlStr: string): Promise<string> {
   const [signedUrl] = await file.getSignedUrl({
     version: "v4",
     action: "read",
-    expires: Date.now() + 10 * 1000, // exactly 5 seconds expiration
+    expires: Date.now() + 5 * 1000, // exactly 5 seconds expiration
   });
 
   return signedUrl;

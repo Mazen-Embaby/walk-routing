@@ -8,7 +8,7 @@
 export interface RegionVersionConfig {
   sizeBytes: number;
   sha256: string;
-  dek?: string;
+  DEK?: string;
   cdnUrl: string;
 }
 

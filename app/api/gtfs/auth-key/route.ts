@@ -23,12 +23,17 @@ async function handleKeyRequest(request: Request) {
     const country = searchParams.get("country") || bodyData.country;
     const region = searchParams.get("region") || bodyData.region;
     const version = searchParams.get("version") || bodyData.version;
+    const clientPublicKey =
+      searchParams.get("clientPublicKey") || bodyData.clientPublicKey;
 
     if (
       !country ||
       !region ||
       version === null ||
       version === undefined ||
+      clientPublicKey === null ||
+      clientPublicKey === undefined ||
+      clientPublicKey === "" ||
       version === ""
     ) {
       return NextResponse.json(
@@ -39,20 +44,16 @@ async function handleKeyRequest(request: Request) {
 
     const countryCode = country.toString().toUpperCase();
     const cleanRegion = region.toString().toLowerCase();
-    const parsedVersion = !isNaN(Number(version))
-      ? Number(version)
-      : version.toString();
-
+    const parsedVersion = version.toString();
     const keyType: string = "rsa";
-    const clientPublicKey =
-      searchParams.get("clientPublicKey") || bodyData.clientPublicKey;
 
     // Dynamically resolve region and version specific DEK strictly from GTFS_CATALOG Map
-    const masterDek = getRegionConfig(
+    const foundedRegionConfig = getRegionConfig(
       countryCode,
       cleanRegion,
       parsedVersion,
-    )?.dek;
+    );
+    const masterDek = foundedRegionConfig?.DEK;
 
     if (!masterDek) {
       return NextResponse.json(
