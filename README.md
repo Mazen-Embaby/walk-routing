@@ -19,5 +19,7 @@ View your app in AI Studio: https://ai.studio/apps/f185beb9-c25a-491a-97ae-d1170
 3. Run the app:
    `npm run dev`
 
+   sha256sum /path/to/file
+
 
 issue might arised as it's servless vercel we might need to use redis https://upstash.com/pricing https://www.npmjs.com/package/@upstash/ratelimit

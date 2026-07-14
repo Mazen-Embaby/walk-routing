@@ -1,0 +1,98 @@
+diff --git a/src/integrations/passport.js b/src/integrations/passport.js
+index 79d75da66c130acb0d1329dfca15bd10c4ea8655..6070eee468e44873d200c1dd2d0c1654a92f0aca 100644
+--- a/src/integrations/passport.js
++++ b/src/integrations/passport.js	
+@@ -1,8 +1,15 @@
+-const jose = require('jose');
+ const { ArgumentError } = require('../errors');
+ const { JwksClient } = require('../JwksClient');
+ const supportedAlg = require('./config');
+ 
++let josePromise;
++function getJose() {
++  if (!josePromise) {
++    josePromise = import('jose');
++  }
++  return josePromise;
++}
++
+ const handleSigningKeyError = (err, cb) => {
+   // If we didn't find a match, can't provide a key.
+   if (err && err.name === 'SigningKeyNotFoundError') {
+@@ -28,25 +35,29 @@ module.exports.passportJwtSecret = function (options) {
+   const onError = options.handleSigningKeyError || handleSigningKeyError;
+ 
+   return function secretProvider(req, rawJwtToken, cb) {
+-    let decoded;
+-    try {
+-      decoded = {
+-        payload: jose.decodeJwt(rawJwtToken),
+-        header: jose.decodeProtectedHeader(rawJwtToken)
+-      };
+-    } catch (err) {
+-      decoded = null;
+-    }
+-
+-    if (!decoded || !supportedAlg.includes(decoded.header.alg)) {
+-      return cb(null, null);
+-    }
+-
+-    client.getSigningKey(decoded.header.kid)
+-      .then(key => {
+-        cb(null, key.publicKey || key.rsaPublicKey);
+-      }).catch(err => {
+-        onError(err, (newError) => cb(newError, null));
+-      });
++    getJose().then(jose => {
++      let decoded;
++      try {
++        decoded = {
++          payload: jose.decodeJwt(rawJwtToken),
++          header: jose.decodeProtectedHeader(rawJwtToken)
++        };
++      } catch (err) {
++        decoded = null;
++      }
++
++      if (!decoded || !supportedAlg.includes(decoded.header.alg)) {
++        return cb(null, null);
++      }
++
++      client.getSigningKey(decoded.header.kid)
++        .then(key => {
++          cb(null, key.publicKey || key.rsaPublicKey);
++        }).catch(err => {
++          onError(err, (newError) => cb(newError, null));
++        });
++    }).catch(err => {
++      onError(err, (newError) => cb(newError, null));
++    });
+   };
+ };
+diff --git a/src/utils.js b/src/utils.js
+index ef3ffb56cda03d2f02d655c55ad14ad983223273..267eec51d9a8d89c6f67d36dc550254b759db916 100644
+--- a/src/utils.js
++++ b/src/utils.js	
+@@ -1,6 +1,13 @@
+-const jose = require('jose');
+ const JwksError = require('./errors/JwksError');
+ 
++let josePromise;
++function getJose() {
++  if (!josePromise) {
++    josePromise = import('jose');
++  }
++  return josePromise;
++}
++
+ function resolveAlg(jwk) {
+   if (jwk.alg) {
+     return jwk.alg;
+@@ -33,6 +40,7 @@ function resolveAlg(jwk) {
+ }
+ 
+ async function retrieveSigningKeys(jwks) {
++  const jose = await getJose();
+   const results = [];
+ 
+   jwks = jwks
