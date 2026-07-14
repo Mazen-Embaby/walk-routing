@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 import { getRegionConfig } from "../config";
+import { getApps, initializeApp, cert } from "firebase-admin/app";
+import { getStorage } from "firebase-admin/storage";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,6 +10,69 @@ export const dynamic = "force-dynamic";
 const OTTR_SECRET = new TextEncoder().encode(
   process.env.GTFS_OTTR_SECRET || "default-ottr-secret-key-change-in-prod-12345"
 );
+
+function ensureFirebaseAdmin() {
+  if (getApps().length === 0) {
+    const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+    if (serviceAccountKey) {
+      try {
+        const serviceAccount = JSON.parse(serviceAccountKey);
+        initializeApp({
+          credential: cert(serviceAccount),
+        });
+      } catch (err) {
+        console.error("Failed to parse FIREBASE_SERVICE_ACCOUNT_KEY:", err);
+        initializeApp();
+      }
+    } else {
+      initializeApp();
+    }
+  }
+}
+
+/**
+ * Parses a GCS CDN URL (e.g., https://storage.googleapis.com/multi-transit-gtfs/cairo_gtfs.db or gs://...)
+ * and generates a V4 Signed URL on the fly with a 5-second expiration.
+ */
+async function getSignedCdnUrl(urlStr: string): Promise<string> {
+  ensureFirebaseAdmin();
+
+  let bucketName = "";
+  let fileName = "";
+
+  if (urlStr.startsWith("gs://")) {
+    const parts = urlStr.slice(5).split("/");
+    bucketName = parts[0];
+    fileName = parts.slice(1).join("/");
+  } else {
+    const parsed = new URL(urlStr);
+    if (parsed.hostname === "storage.googleapis.com") {
+      const pathParts = parsed.pathname.replace(/^\/+/, "").split("/");
+      bucketName = pathParts[0];
+      fileName = pathParts.slice(1).join("/");
+    } else if (parsed.hostname.endsWith(".storage.googleapis.com")) {
+      bucketName = parsed.hostname.split(".")[0];
+      fileName = parsed.pathname.replace(/^\/+/, "");
+    } else {
+      throw new Error(`Target URL '${urlStr}' is not a recognized Google Cloud Storage URL`);
+    }
+  }
+
+  if (!bucketName || !fileName) {
+    throw new Error(`Could not parse bucket and file path from target URL '${urlStr}'`);
+  }
+
+  const bucket = getStorage().bucket(bucketName);
+  const file = bucket.file(fileName);
+
+  const [signedUrl] = await file.getSignedUrl({
+    version: "v4",
+    action: "read",
+    expires: Date.now() + 10 * 1000, // exactly 5 seconds expiration
+  });
+
+  return signedUrl;
+}
 
 // Global in-memory fallback Set for consumed single-use token JTIs across edge/Node invocations
 declare global {
@@ -108,7 +173,19 @@ async function handleDownloadRequest(request: Request) {
       );
     }
 
-    return NextResponse.redirect(targetUrl, { status: 307 });
+    // 4. Generate on-the-fly Google Cloud Storage Signed V4 URL with 5-second expiration
+    let signedRedirectUrl = targetUrl;
+    try {
+      signedRedirectUrl = await getSignedCdnUrl(targetUrl);
+    } catch (signErr: any) {
+      console.error("Failed to generate GCS Signed URL on the fly:", signErr);
+      return NextResponse.json(
+        { error: "Failed to generate short-lived signed URL for private GCS dataset", details: signErr?.message || String(signErr) },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.redirect(signedRedirectUrl, { status: 307 });
   } catch (err: any) {
     console.error("Download API error:", err);
     return NextResponse.json(
