@@ -39,7 +39,7 @@ export async function proxy(request: NextRequest) {
   const hasSession = request.cookies.has('app_session');
 
   // 2. Global Firebase App Check validation for API requests
-  if (process.env.ENFORCE_APP_CHECK === 'true' && path.startsWith('/api/') && !hasSession) {
+  if (process.env.ENFORCE_APP_CHECK === 'true' && path.startsWith('/api/')) {
     const token = request.headers.get('X-Firebase-AppCheck');
     if (!token) {
       return new NextResponse(
