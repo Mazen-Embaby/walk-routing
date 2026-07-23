@@ -1,0 +1,217 @@
+{
+  "regions": [
+    {
+      "code": "EG",
+      "nameEn": "Egypt",
+      "nameAr": "مصر",
+      "flag": "assets/images/flags/eg.png",
+      "cities": [
+        {
+          "id": "Cairo",
+          "nameEn": "Greater Cairo",
+          "nameAr": "القاهرة الكبرى",
+          "subtitleEn": "Metro, CTA Buses, Microbuses (~{} MB)",
+          "subtitleAr": "مترو الأنفاق، أتوبيسات، ميكروباصات (~ {} ميجابايت)",
+          "countryCode": "EG",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/EG/cairo_gtfs.db",
+          "estimatedSizeMb": 80,
+          "isDefaultSelected": true,
+          "icon": "subway_rounded",
+          "bounds": {
+            "longitudeWest": 30.9,
+            "longitudeEast": 31.9,
+            "latitudeSouth": 29.8,
+            "latitudeNorth": 30.3
+          }
+        },
+        {
+          "id": "Alexandria",
+          "nameEn": "Alexandria",
+          "nameAr": "الإسكندرية",
+          "subtitleEn": "Tram, Buses, Microbuses (~{} MB)",
+          "subtitleAr": "ترام، أتوبيسات، ميكروباصات (~ {} ميجابايت)",
+          "countryCode": "EG",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/EG/alexandria_gtfs.db",
+          "estimatedSizeMb": 5,
+          "isDefaultSelected": false,
+          "icon": "tram_rounded",
+          "bounds": {
+            "longitudeWest": 29.6,
+            "longitudeEast": 30.2,
+            "latitudeSouth": 31.0,
+            "latitudeNorth": 31.4
+          }
+        },
+        {
+          "id": "Train",
+          "nameEn": "Intercity Rail Network",
+          "nameAr": "شبكة القطارات بين المدن",
+          "subtitleEn": "National Railway Lines (~{} MB)",
+          "subtitleAr": "خطوط السكك الحديدية الوطنية (~ {} ميجابايت)",
+          "countryCode": "EG",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/EG/train_gtfs.db",
+          "estimatedSizeMb": 15,
+          "isDefaultSelected": true,
+          "icon": "train_rounded",
+          "bounds": {
+            "longitudeWest": 25.0,
+            "longitudeEast": 33.9,
+            "latitudeSouth": 23.0,
+            "latitudeNorth": 31.8
+          }
+        }
+      ]
+    },
+    {
+      "code": "CH",
+      "nameEn": "Switzerland",
+      "nameAr": "سويسرا",
+      "flag": "assets/images/flags/ch.png",
+      "cities": [
+        {
+          "id": "Switzerland",
+          "nameEn": "Switzerland Network",
+          "nameAr": "شبكة مواصلات سويسرا",
+          "subtitleEn": "SBB Trains, S-Bahn, Trams, Buses (~{} MB)",
+          "subtitleAr": "قطارات، إس-بان، ترام، أتوبيسات (~ {} ميجابايت)",
+          "countryCode": "CH",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/CH/switzerland_gtfs.db",
+          "estimatedSizeMb": 2500,
+          "isDefaultSelected": false,
+          "icon": "train_rounded",
+          "bounds": {
+            "longitudeWest": 5.9,
+            "longitudeEast": 10.5,
+            "latitudeSouth": 45.8,
+            "latitudeNorth": 47.8
+          }
+        }
+      ]
+    },
+    {
+      "code": "AE",
+      "nameEn": "United Arab Emirates",
+      "nameAr": "الإمارات العربية المتحدة",
+      "flag": "assets/images/flags/ae.png",
+      "cities": [
+        {
+          "id": "Dubai",
+          "nameEn": "Dubai",
+          "nameAr": "دبي",
+          "subtitleEn": "Metro, Tram, Buses (~{} MB)",
+          "subtitleAr": "مترو، ترام، أتوبيسات (~ {} ميجابايت)",
+          "countryCode": "AE",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/AE/dubai_gtfs.db",
+          "estimatedSizeMb": 50,
+          "isDefaultSelected": false,
+          "icon": "subway_rounded",
+          "bounds": {
+            "longitudeWest": 54.9704,
+            "longitudeEast": 56.1327,
+            "latitudeSouth": 24.7205,
+            "latitudeNorth": 25.4116
+          }
+        }
+      ]
+    },
+    {
+      "code": "NL",
+      "nameEn": "Netherlands",
+      "nameAr": "هولندا",
+      "flag": "assets/images/flags/nl.png",
+      "cities": [
+        {
+          "id": "EUSleeper",
+          "nameEn": "EU Sleeper",
+          "nameAr": "قطارات أوروبا الليلية",
+          "subtitleEn": "European Sleeper Trains (~{} MB)",
+          "subtitleAr": "قطارات النوم الأوروبية (~ {} ميجابايت)",
+          "countryCode": "NL",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/NL/eusleeper_gtfs.db",
+          "estimatedSizeMb": 15,
+          "isDefaultSelected": false,
+          "icon": "train_rounded",
+          "bounds": {
+            "longitudeWest": 2.3550,
+            "longitudeEast": 14.4361,
+            "latitudeSouth": 45.4846,
+            "latitudeNorth": 53.4557
+          }
+        }
+      ]
+    },
+    {
+      "code": "UG",
+      "nameEn": "Uganda",
+      "nameAr": "أوغندا",
+      "flag": "assets/images/flags/ug.png",
+      "cities": [
+        {
+          "id": "Kampala",
+          "nameEn": "Kampala",
+          "nameAr": "كامبالا",
+          "subtitleEn": "Buses, Minibuses (~{} MB)",
+          "subtitleAr": "أتوبيسات، حافلات صغيرة (~ {} ميجابايت)",
+          "countryCode": "UG",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/UG/kampala_gtfs.db",
+          "estimatedSizeMb": 20,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 32.4417,
+            "longitudeEast": 32.7504,
+            "latitudeSouth": 0.0555,
+            "latitudeNorth": 0.4652
+          }
+        }
+      ]
+    },
+    {
+      "code": "OM",
+      "nameEn": "Oman",
+      "nameAr": "عُمان",
+      "flag": "assets/images/flags/om.png",
+      "cities": [
+        {
+          "id": "Oman",
+          "nameEn": "Oman",
+          "nameAr": "عُمان",
+          "subtitleEn": "Mwasalat Buses (~{} MB)",
+          "subtitleAr": "مواصلات (~ {} ميجابايت)",
+          "countryCode": "OM",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/OM/oman_gtfs.db",
+          "estimatedSizeMb": 20,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 51.8,
+            "longitudeEast": 59.9,
+            "latitudeSouth": 16.6,
+            "latitudeNorth": 26.4
+          },
+          "attribution": {
+            "providerName": "Mwasalat",
+            "descriptionEn": "Official public transport static schedule and realtime data in Oman.",
+            "descriptionAr": "بيانات جدول النقل العام الثابتة والمباشرة الرسمية في عُمان.",
+            "url": "https://mwasalat.om/"
+          },
+          "dataSources": {
+            "sourceUrl": "https://www.transit.land/feeds/f-mwasalat",
+            "staticGtfs": "https://avl.mwasalat.om/data/gtfs/gtfs.zip",
+            "gtfsRtVehiclePositions": "https://avl.mwasalat.om/data/gtfs/vehicle-positions.pb",
+            "gtfsRtTripUpdates": "https://avl.mwasalat.om/data/gtfs/trip-updates.pb"
+          },
+          "isSupportRT": true
+        }
+      ]
+    }
+  ]
+}
