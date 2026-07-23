@@ -23,7 +23,21 @@
             "longitudeEast": 31.9,
             "latitudeSouth": 29.8,
             "latitudeNorth": 30.3
-          }
+          },
+          "attribution": [
+            {
+              "providerName": "Transport for Cairo",
+              "descriptionEn": "Public transport static schedule and route data for Egypt.",
+              "descriptionAr": "بيانات جدول النقل العام الثابتة ومسارات الخطوط الرسمية في مصر.",
+              "url": "https://data.transportforcairo.com/"
+            },
+            {
+              "providerName": "Daeeim",
+              "descriptionEn": "Data contributor and validator.",
+              "descriptionAr": "مساهم ومدقق للبيانات.",
+              "url": "https://daeeim.com/"
+            }
+          ]
         },
         {
           "id": "Alexandria",
@@ -42,7 +56,21 @@
             "longitudeEast": 30.2,
             "latitudeSouth": 31.0,
             "latitudeNorth": 31.4
-          }
+          },
+          "attribution": [
+            {
+              "providerName": "Transport for Cairo",
+              "descriptionEn": "Public transport static schedule and route data for Egypt.",
+              "descriptionAr": "بيانات جدول النقل العام الثابتة ومسارات الخطوط الرسمية في مصر.",
+              "url": "https://data.transportforcairo.com/"
+            },
+            {
+              "providerName": "Daeeim",
+              "descriptionEn": "Data contributor and validator.",
+              "descriptionAr": "مساهم ومدقق للبيانات.",
+              "url": "https://daeeim.com/"
+            }
+          ]
         },
         {
           "id": "Train",
@@ -197,12 +225,14 @@
             "latitudeSouth": 16.6,
             "latitudeNorth": 26.4
           },
-          "attribution": {
-            "providerName": "Mwasalat",
-            "descriptionEn": "Official public transport static schedule and realtime data in Oman.",
-            "descriptionAr": "بيانات جدول النقل العام الثابتة والمباشرة الرسمية في عُمان.",
-            "url": "https://mwasalat.om/"
-          },
+          "attribution": [
+            {
+              "providerName": "Mwasalat",
+              "descriptionEn": "Official public transport static schedule and realtime data in Oman.",
+              "descriptionAr": "بيانات جدول النقل العام الثابتة والمباشرة الرسمية في عُمان.",
+              "url": "https://mwasalat.om/"
+            }
+          ],
           "dataSources": {
             "sourceUrl": "https://www.transit.land/feeds/f-mwasalat",
             "staticGtfs": "https://avl.mwasalat.om/data/gtfs/gtfs.zip",
