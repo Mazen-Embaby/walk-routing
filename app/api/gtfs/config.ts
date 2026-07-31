@@ -43,8 +43,14 @@ export function getCatalogMap(): GtfsCatalogMap {
     return cachedCatalog;
   }
 
+  let jsonToParse = currentEnvString;
+  // If dotenv didn't unescape double quotes and backslashes, handle it manually.
+  if (jsonToParse.startsWith('{\\"')) {
+    jsonToParse = jsonToParse.replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+  }
+
   try {
-    const parsed = JSON.parse(currentEnvString);
+    const parsed = JSON.parse(jsonToParse);
     if (typeof parsed === "object" && parsed !== null) {
       cachedCatalog = parsed as GtfsCatalogMap;
       lastCatalogString = currentEnvString;

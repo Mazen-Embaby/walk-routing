@@ -143,7 +143,55 @@
             "longitudeEast": 56.1327,
             "latitudeSouth": 24.7205,
             "latitudeNorth": 25.4116
+          },
+          "attribution": [
+            {
+              "providerName": "Data Dubai",
+              "descriptionEn": "Dubai's Data & Statistics.",
+              "descriptionAr": "البيانات والإحصائيات - دبي.",
+              "url": "https://data.dubai/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://data.dubai/en/l/464468",
+            "staticGtfs": "https://data.dubai/en/l/464468",
+            "gtfsRtVehiclePositions": "",
+            "gtfsRtTripUpdates": ""
           }
+        },
+        {
+          "id": "AbuDhabi",
+          "nameEn": "Abu Dhabi",
+          "nameAr": "أبو ظبي",
+          "subtitleEn": "Buses (~{} MB)",
+          "subtitleAr": "أتوبيسات (~ {} ميجابايت)",
+          "countryCode": "AE",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/AE/abudhabi_gtfs.db",
+          "estimatedSizeMb": 40,
+          "isDefaultSelected": true,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 51.5,
+            "longitudeEast": 56.0,
+            "latitudeSouth": 22.5,
+            "latitudeNorth": 25.0
+          },
+          "attribution": [
+            {
+              "providerName": "ITC / Darbi",
+              "descriptionEn": "Official Abu Dhabi transport data.",
+              "descriptionAr": "بيانات النقل الرسمية لأبو ظبي.",
+              "url": "https://darbi.itc.gov.ae/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://darbi.itc.gov.ae/",
+            "staticGtfs": "",
+            "gtfsRtVehiclePositions": "",
+            "gtfsRtTripUpdates": "darbi-api"
+          },
+          "isSupportRT": true
         }
       ]
     },
@@ -166,7 +214,7 @@
           "isDefaultSelected": false,
           "icon": "train_rounded",
           "bounds": {
-            "longitudeWest": 2.3550,
+            "longitudeWest": 2.355,
             "longitudeEast": 14.4361,
             "latitudeSouth": 45.4846,
             "latitudeNorth": 53.4557

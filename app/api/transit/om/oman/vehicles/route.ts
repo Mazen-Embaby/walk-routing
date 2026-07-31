@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const city = country?.cities.find(c => c.id === 'Oman') as any;
   const feedUrl = city?.dataSources?.gtfsRtVehiclePositions;
 
-  if (!feedUrl) {
+  if (!feedUrl || feedUrl === '') {
     return NextResponse.json({ error: `No GTFS-RT Vehicle Positions feed found for region Oman` }, { status: 404 });
   }
 
