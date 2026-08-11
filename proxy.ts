@@ -36,7 +36,11 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const hasSession = request.cookies.has('app_session');
+  const authHeader = request.headers.get('authorization');
+  const hasSession = 
+    request.cookies.has('better-auth.session_token') || 
+    request.cookies.has('__Secure-better-auth.session_token') ||
+    (authHeader && authHeader.startsWith('Bearer '));
 
   // 2. Global Firebase App Check validation for API requests
   if (process.env.ENFORCE_APP_CHECK === 'true' && path.startsWith('/api/')) {
@@ -75,7 +79,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (!hasSession) {
+  if (!hasSession && path.startsWith('/api/') && !path.startsWith('/api/auth')) {
     return new NextResponse(
       JSON.stringify({ error: 'Authentication required' }),
       { status: 401, headers: { 'content-type': 'application/json' } }

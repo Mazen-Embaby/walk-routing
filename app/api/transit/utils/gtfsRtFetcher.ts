@@ -1,8 +1,9 @@
 import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
 
-export async function fetchGtfsRtEtas(feedUrl: string, routeId: string | null, stopId: string | null) {
+export async function fetchGtfsRtEtas(feedUrl: string, routeId: string | null, stopId: string | null, headers?: HeadersInit) {
   const response = await fetch(feedUrl, {
-    next: { revalidate: 30 }
+    next: { revalidate: 30 },
+    headers: headers,
   });
 
   if (!response.ok) {
@@ -55,9 +56,10 @@ export async function fetchGtfsRtEtas(feedUrl: string, routeId: string | null, s
   };
 }
 
-export async function fetchGtfsRtVehicles(feedUrl: string, routeId: string | null, vehicleId: string | null) {
+export async function fetchGtfsRtVehicles(feedUrl: string, routeId: string | null, vehicleId: string | null, headers?: HeadersInit) {
   const response = await fetch(feedUrl, {
-    next: { revalidate: 15 }
+    next: { revalidate: 30 },
+    headers: headers,
   });
 
   if (!response.ok) {

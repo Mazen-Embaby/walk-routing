@@ -7,16 +7,22 @@ export async function GET(request: Request) {
   const routeId = searchParams.get('routeId');
   const vehicleId = searchParams.get('vehicleId');
 
-  const country = regionsConfig.regions.find(r => r.code === 'OM');
-  const city = country?.cities.find(c => c.id === 'Oman') as any;
+  const country = regionsConfig.regions.find(r => r.code === 'AE');
+  const city = country?.cities.find(c => c.id === 'Dubai') as any;
   const feedUrl = city?.dataSources?.gtfsRtVehiclePositions;
 
   if (!feedUrl || feedUrl === '') {
-    return NextResponse.json({ error: `No GTFS-RT Vehicle Positions feed found for region Oman` }, { status: 404 });
+    return NextResponse.json({ error: `No GTFS-RT Vehicle Positions feed found for region Dubai` }, { status: 404 });
   }
 
   try {
-    const data = await fetchGtfsRtVehicles(feedUrl, routeId, vehicleId);
+    const headers: HeadersInit = {};
+    if (process.env.SWIFTLY_API_KEY_DUBAI) {
+      headers['Authorization'] = process.env.SWIFTLY_API_KEY_DUBAI;
+    }
+
+    const data = await fetchGtfsRtVehicles(feedUrl, routeId, vehicleId, headers);
+    
     return NextResponse.json(data, {
       status: 200,
       headers: {
@@ -24,7 +30,7 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error('Error fetching Oman Vehicles:', error);
+    console.error('Error fetching Dubai Vehicles:', error);
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }

@@ -43,7 +43,14 @@ export function getCatalogMap(): GtfsCatalogMap {
     return cachedCatalog;
   }
 
-  let jsonToParse = currentEnvString;
+  let jsonToParse = currentEnvString.trim();
+  
+  // Strip outer quotes if Vercel retained them literally
+  if ((jsonToParse.startsWith('"') && jsonToParse.endsWith('"')) || 
+      (jsonToParse.startsWith("'") && jsonToParse.endsWith("'"))) {
+    jsonToParse = jsonToParse.slice(1, -1);
+  }
+
   // If dotenv didn't unescape double quotes and backslashes, handle it manually.
   if (jsonToParse.startsWith('{\\"')) {
     jsonToParse = jsonToParse.replace(/\\"/g, '"').replace(/\\\\/g, '\\');

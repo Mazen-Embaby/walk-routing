@@ -7,16 +7,22 @@ export async function GET(request: Request) {
   const routeId = searchParams.get('routeId');
   const stopId = searchParams.get('stopId');
 
-  const country = regionsConfig.regions.find(r => r.code === 'OM');
-  const city = country?.cities.find(c => c.id === 'Oman') as any;
+  const country = regionsConfig.regions.find(r => r.code === 'AE');
+  const city = country?.cities.find(c => c.id === 'Dubai') as any;
   const feedUrl = city?.dataSources?.gtfsRtTripUpdates;
 
   if (!feedUrl || feedUrl === '') {
-    return NextResponse.json({ error: `No GTFS-RT Trip Updates feed found for region Oman` }, { status: 404 });
+    return NextResponse.json({ error: `No GTFS-RT Trip Updates feed found for region Dubai` }, { status: 404 });
   }
 
   try {
-    const data = await fetchGtfsRtEtas(feedUrl, routeId, stopId);
+    const headers: HeadersInit = {};
+    if (process.env.SWIFTLY_API_KEY_DUBAI) {
+      headers['Authorization'] = process.env.SWIFTLY_API_KEY_DUBAI;
+    }
+
+    const data = await fetchGtfsRtEtas(feedUrl, routeId, stopId, headers);
+    
     return NextResponse.json(data, {
       status: 200,
       headers: {
@@ -24,7 +30,7 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error('Error fetching Oman ETAs:', error);
+    console.error('Error fetching Dubai ETAs:', error);
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }

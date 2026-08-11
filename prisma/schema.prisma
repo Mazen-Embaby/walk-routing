@@ -1,0 +1,103 @@
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["public", "auth"]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+}
+
+model Contribution {
+  id          String   @id @default(cuid())
+  fcmToken    String
+  userId      String? // Linked to better-auth User
+  category    String // 'missing_data' | 'wrong_data'
+  subcategory String // 'new_route' | 'stop' | 'shape' | 'schedule' | 'deprecated_route'
+  regionId    String
+  routeId     String?
+  routeName   String?
+  description String
+  latitude    Float? // For stop pinpointing
+  longitude   Float?
+  shapeData   Json? // Simplified polyline [{lat, lng, ts}]
+  photoUrls   String[] // URLs after upload
+  status      String   @default("pending") // 'pending' | 'reviewed' | 'accepted' | 'rejected'
+  points      Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User?    @relation(fields: [userId], references: [id])
+
+  @@index([fcmToken])
+  @@index([status])
+  @@index([regionId])
+  @@schema("public")
+}
+
+model User {
+  id            String         @id
+  name          String
+  email         String
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  isAnonymous   Boolean?
+  sessions      Session[]
+  accounts      Account[]
+  contributions Contribution[]
+
+  @@map("user")
+  @@schema("auth")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+  @@index([userId])
+  @@schema("auth")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+  @@index([userId])
+  @@schema("auth")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+  @@index([identifier])
+  @@schema("auth")
+}
