@@ -45,15 +45,27 @@ export function getCatalogMap(): GtfsCatalogMap {
 
   let jsonToParse = currentEnvString.trim();
   
-  // Strip outer quotes if Vercel retained them literally
-  if ((jsonToParse.startsWith('"') && jsonToParse.endsWith('"')) || 
-      (jsonToParse.startsWith("'") && jsonToParse.endsWith("'"))) {
-    jsonToParse = jsonToParse.slice(1, -1);
-  }
+  // 1. The bulletproof way: Base64 encoding. 
+  // Base64 encoded JSON objects always start with "ew" (Base64 for '{' followed by any char)
+  // For example: '{"' is 'eyJ', '{\n' is 'ewo', '{ ' is 'eyA'
+  if (jsonToParse.startsWith("ew")) {
+    try {
+      jsonToParse = Buffer.from(jsonToParse, 'base64').toString('utf-8');
+    } catch (e) {
+      // Fallback if base64 decoding fails
+    }
+  } else {
+    // 2. Fallback for raw JSON strings
+    // Strip outer quotes if Vercel retained them literally
+    if ((jsonToParse.startsWith('"') && jsonToParse.endsWith('"')) || 
+        (jsonToParse.startsWith("'") && jsonToParse.endsWith("'"))) {
+      jsonToParse = jsonToParse.slice(1, -1);
+    }
 
-  // If dotenv didn't unescape double quotes and backslashes, handle it manually.
-  if (jsonToParse.startsWith('{\\"')) {
-    jsonToParse = jsonToParse.replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+    // If dotenv didn't unescape double quotes and backslashes, handle it manually.
+    if (jsonToParse.startsWith('{\\"')) {
+      jsonToParse = jsonToParse.replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+    }
   }
 
   try {
