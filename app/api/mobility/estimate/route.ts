@@ -49,6 +49,12 @@ export async function GET(request: NextRequest) {
       currency = 'MYR';
       etaMinutes = Math.floor(Math.random() * 10) + 1; // 1 to 10 minutes
       break;
+    case 'yango':
+      minFare = Math.round(mockDistanceKm * 3.0 + 12.0); // AED 12 base + 3/km
+      maxFare = Math.round(minFare * 1.3);
+      currency = 'AED';
+      etaMinutes = Math.floor(Math.random() * 7) + 2; // 2 to 8 minutes
+      break;
     default:
       return NextResponse.json({ error: 'Unsupported provider' }, { status: 400 });
   }
