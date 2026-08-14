@@ -4,17 +4,17 @@
       "code": "EG",
       "nameEn": "Egypt",
       "nameAr": "مصر",
-      "flag": "assets/images/flags/eg.png",
+      "flag": "assets/images/flags/eg.svg",
       "cities": [
         {
-          "id": "Cairo",
+          "id": "EG_Cairo",
           "nameEn": "Greater Cairo",
           "nameAr": "القاهرة الكبرى",
           "subtitleEn": "Metro, CTA Buses, Microbuses (~{} MB)",
           "subtitleAr": "مترو الأنفاق، أتوبيسات، ميكروباصات (~ {} ميجابايت)",
           "countryCode": "EG",
           "version": "1.0.0",
-          "gtfsDbPath": "assets/db/EG/cairo_gtfs.db",
+          "gtfsDbPath": "assets/db/EG/eg_cairo_gtfs.db",
           "estimatedSizeMb": 80,
           "isDefaultSelected": true,
           "icon": "subway_rounded",
@@ -28,26 +28,65 @@
             {
               "providerName": "Transport for Cairo",
               "descriptionEn": "Public transport static schedule and route data for Egypt.",
-              "descriptionAr": "\u0628\u064a\u0627\u0646\u0627\u062a \u062c\u062f\u0648\u0644 \u0627\u0644\u0646\u0642\u0644 \u0627\u0644\u0639\u0627\u0645 \u0627\u0644\u062b\u0627\u0628\u062a\u0629 \u0648\u0645\u0633\u0627\u0631\u0627\u062a \u0627\u0644\u062e\u0637\u0648\u0637 \u0627\u0644\u0631\u0633\u0645\u064a\u0629 \u0641\u064a \u0645\u0635\u0631.",
+              "descriptionAr": "بيانات جدول النقل العام الثابتة ومسارات الخطوط الرسمية في مصر.",
               "url": "https://data.transportforcairo.com/"
             },
             {
               "providerName": "Daeeim",
               "descriptionEn": "Data contributor and validator.",
-              "descriptionAr": "\u0645\u0633\u0627\u0647\u0645 \u0648\u0645\u062f\u0642\u0642 \u0644\u0644\u0628\u064a\u0627\u0646\u0627\u062a.",
+              "descriptionAr": "مساهم ومدقق للبيانات.",
               "url": "https://daeeim.com/"
             }
+          ],
+          "dataSources": {
+            "osmUrl": "https://download.geofabrik.de/africa/egypt-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "EG_Cairo_Metro",
+                "pipelineType": "repo",
+                "gtfsDirName": "Metro",
+                "addVirtualStops": true
+              },
+              {
+                "id": "EG_Cairo_Monorail",
+                "pipelineType": "repo",
+                "gtfsDirName": "Monorail",
+                "addVirtualStops": true
+              },
+              {
+                "id": "EG_Cairo_LRT",
+                "pipelineType": "repo",
+                "gtfsDirName": "LRT",
+                "addVirtualStops": true
+              },
+              {
+                "id": "EG_Cairo_BRT",
+                "pipelineType": "repo",
+                "gtfsDirName": "BRT",
+                "addVirtualStops": true
+              },
+              {
+                "id": "EG_Cairo_Bus",
+                "pipelineType": "repo",
+                "gtfsDirName": "Bus",
+                "addVirtualStops": true
+              }
+            ]
+          },
+          "supportedRideProviders": [
+            "uber",
+            "careem"
           ]
         },
         {
-          "id": "Alexandria",
+          "id": "EG_Alexandria",
           "nameEn": "Alexandria",
-          "nameAr": "\u0627\u0644\u0625\u0633\u0643\u0646\u062f\u0631\u064a\u0629",
+          "nameAr": "الإسكندرية",
           "subtitleEn": "Tram, Buses, Microbuses (~{} MB)",
-          "subtitleAr": "\u062a\u0631\u0627\u0645\u060c \u0623\u062a\u0648\u0628\u064a\u0633\u0627\u062a\u060c \u0645\u064a\u0643\u0631\u0648\u0628\u0627\u0635\u0627\u062a (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
+          "subtitleAr": "ترام، أتوبيسات، ميكروباصات (~ {} ميجابايت)",
           "countryCode": "EG",
           "version": "1.0.0",
-          "gtfsDbPath": "assets/db/EG/alexandria_gtfs.db",
+          "gtfsDbPath": "assets/db/EG/eg_alexandria_gtfs.db",
           "estimatedSizeMb": 5,
           "isDefaultSelected": false,
           "icon": "tram_rounded",
@@ -61,80 +100,67 @@
             {
               "providerName": "Transport for Cairo",
               "descriptionEn": "Public transport static schedule and route data for Egypt.",
-              "descriptionAr": "\u0628\u064a\u0627\u0646\u0627\u062a \u062c\u062f\u0648\u0644 \u0627\u0644\u0646\u0642\u0644 \u0627\u0644\u0639\u0627\u0645 \u0627\u0644\u062b\u0627\u0628\u062a\u0629 \u0648\u0645\u0633\u0627\u0631\u0627\u062a \u0627\u0644\u062e\u0637\u0648\u0637 \u0627\u0644\u0631\u0633\u0645\u064a\u0629 \u0641\u064a \u0645\u0635\u0631.",
+              "descriptionAr": "بيانات جدول النقل العام الثابتة ومسارات الخطوط الرسمية في مصر.",
               "url": "https://data.transportforcairo.com/"
             },
             {
               "providerName": "Daeeim",
               "descriptionEn": "Data contributor and validator.",
-              "descriptionAr": "\u0645\u0633\u0627\u0647\u0645 \u0648\u0645\u062f\u0642\u0642 \u0644\u0644\u0628\u064a\u0627\u0646\u0627\u062a.",
+              "descriptionAr": "مساهم ومدقق للبيانات.",
               "url": "https://daeeim.com/"
             }
+          ],
+          "dataSources": {
+            "osmUrl": "https://download.geofabrik.de/africa/egypt-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber",
+            "careem"
           ]
         },
         {
-          "id": "Train",
+          "id": "EG_Train",
           "nameEn": "Intercity Rail Network",
-          "nameAr": "\u0634\u0628\u0643\u0629 \u0627\u0644\u0642\u0637\u0627\u0631\u0627\u062a \u0628\u064a\u0646 \u0627\u0644\u0645\u062f\u0646",
+          "nameAr": "شبكة القطارات بين المدن",
           "subtitleEn": "National Railway Lines (~{} MB)",
-          "subtitleAr": "\u062e\u0637\u0648\u0637 \u0627\u0644\u0633\u0643\u0643 \u0627\u0644\u062d\u062f\u064a\u062f\u064a\u0629 \u0627\u0644\u0648\u0637\u0646\u064a\u0629 (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
+          "subtitleAr": "خطوط السكك الحديدية الوطنية (~ {} ميجابايت)",
           "countryCode": "EG",
           "version": "1.0.0",
-          "gtfsDbPath": "assets/db/EG/train_gtfs.db",
+          "gtfsDbPath": "assets/db/EG/eg_train_gtfs.db",
           "estimatedSizeMb": 15,
           "isDefaultSelected": true,
           "icon": "train_rounded",
           "bounds": {
             "longitudeWest": 25.0,
-            "longitudeEast": 33.9,
-            "latitudeSouth": 23.0,
-            "latitudeNorth": 31.8
-          }
-        }
-      ]
-    },
-    {
-      "code": "CH",
-      "nameEn": "Switzerland",
-      "nameAr": "\u0633\u0648\u064a\u0633\u0631\u0627",
-      "flag": "assets/images/flags/ch.png",
-      "cities": [
-        {
-          "id": "Switzerland",
-          "nameEn": "Switzerland Network",
-          "nameAr": "\u0634\u0628\u0643\u0629 \u0645\u0648\u0627\u0635\u0644\u0627\u062a \u0633\u0648\u064a\u0633\u0631\u0627",
-          "subtitleEn": "SBB Trains, S-Bahn, Trams, Buses (~{} MB)",
-          "subtitleAr": "\u0642\u0637\u0627\u0631\u0627\u062a\u060c \u0625\u0633-\u0628\u0627\u0646\u060c \u062a\u0631\u0627\u0645\u060c \u0623\u062a\u0648\u0628\u064a\u0633\u0627\u062a (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
-          "countryCode": "CH",
-          "version": "1.0.0",
-          "gtfsDbPath": "assets/db/CH/switzerland_gtfs.db",
-          "estimatedSizeMb": 2500,
-          "isDefaultSelected": false,
-          "icon": "train_rounded",
-          "bounds": {
-            "longitudeWest": 5.9,
-            "longitudeEast": 10.5,
-            "latitudeSouth": 45.8,
-            "latitudeNorth": 47.8
-          }
+            "longitudeEast": 34.0,
+            "latitudeSouth": 22.0,
+            "latitudeNorth": 32.0
+          },
+          "dataSources": {
+            "osmUrl": "https://download.geofabrik.de/africa/egypt-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber",
+            "careem"
+          ]
         }
       ]
     },
     {
       "code": "AE",
       "nameEn": "United Arab Emirates",
-      "nameAr": "\u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062a \u0627\u0644\u0639\u0631\u0628\u064a\u0629 \u0627\u0644\u0645\u062a\u062d\u062f\u0629",
-      "flag": "assets/images/flags/ae.png",
+      "nameAr": "الإمارات العربية المتحدة",
+      "flag": "assets/images/flags/ae.svg",
       "cities": [
         {
-          "id": "Dubai",
+          "id": "AE_Dubai",
           "nameEn": "Dubai",
-          "nameAr": "\u062f\u0628\u064a",
+          "nameAr": "دبي",
           "subtitleEn": "Metro, Tram, Buses (~{} MB)",
-          "subtitleAr": "\u0645\u062a\u0631\u0648\u060c \u062a\u0631\u0627\u0645\u060c \u0623\u062a\u0648\u0628\u064a\u0633\u0627\u062a (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
+          "subtitleAr": "مترو، ترام، أتوبيسات (~ {} ميجابايت)",
           "countryCode": "AE",
           "version": "1.0.0",
-          "gtfsDbPath": "assets/db/AE/dubai_gtfs.db",
+          "gtfsDbPath": "assets/db/AE/ae_dubai_gtfs.db",
           "estimatedSizeMb": 50,
           "isDefaultSelected": false,
           "icon": "subway_rounded",
@@ -148,29 +174,34 @@
             {
               "providerName": "Data Dubai",
               "descriptionEn": "Dubai's Data & Statistics.",
-              "descriptionAr": "\u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0648\u0627\u0644\u0625\u062d\u0635\u0627\u0626\u064a\u0627\u062a - \u062f\u0628\u064a.",
+              "descriptionAr": "البيانات والإحصائيات - دبي.",
               "url": "https://data.dubai/"
             }
           ],
           "dataSources": {
             "sourceUrl": "https://data.dubai/en/l/464468",
             "staticGtfs": "https://data.dubai/en/l/464468",
-            "gtfsRtVehiclePositions": "https://api.goswift.ly/real-time/dubai/gtfs-rt-vehicle-positions",
-            "gtfsRtTripUpdates": "https://api.goswift.ly/real-time/dubai/gtfs-rt-trip-updates"
+            "gtfsRtVehiclePositions": "",
+            "gtfsRtTripUpdates": "",
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
           },
-          "isSupportRT": true
+          "supportedRideProviders": [
+            "uber",
+            "careem",
+            "yango"
+          ]
         },
         {
-          "id": "AbuDhabi",
+          "id": "AE_AbuDhabi",
           "nameEn": "Abu Dhabi",
-          "nameAr": "\u0623\u0628\u0648 \u0638\u0628\u064a",
+          "nameAr": "أبو ظبي",
           "subtitleEn": "Buses (~{} MB)",
-          "subtitleAr": "\u0623\u062a\u0648\u0628\u064a\u0633\u0627\u062a (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
+          "subtitleAr": "أتوبيسات (~ {} ميجابايت)",
           "countryCode": "AE",
           "version": "1.0.0",
-          "gtfsDbPath": "assets/db/AE/abudhabi_gtfs.db",
+          "gtfsDbPath": "assets/db/AE/ae_abudhabi_gtfs.db",
           "estimatedSizeMb": 40,
-          "isDefaultSelected": true,
+          "isDefaultSelected": false,
           "icon": "directions_bus_rounded",
           "bounds": {
             "longitudeWest": 51.5,
@@ -182,7 +213,7 @@
             {
               "providerName": "ITC / Darbi",
               "descriptionEn": "Official Abu Dhabi transport data.",
-              "descriptionAr": "\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0646\u0642\u0644 \u0627\u0644\u0631\u0633\u0645\u064a\u0629 \u0644\u0623\u0628\u0648 \u0638\u0628\u064a.",
+              "descriptionAr": "بيانات النقل الرسمية لأبو ظبي.",
               "url": "https://darbi.itc.gov.ae/"
             }
           ],
@@ -190,81 +221,648 @@
             "sourceUrl": "https://darbi.itc.gov.ae/",
             "staticGtfs": "",
             "gtfsRtVehiclePositions": "",
-            "gtfsRtTripUpdates": "darbi-api"
+            "gtfsRtTripUpdates": "darbi-api",
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
           },
-          "isSupportRT": true
-        }
-      ]
-    },
-    {
-      "code": "NL",
-      "nameEn": "Netherlands",
-      "nameAr": "\u0647\u0648\u0644\u0646\u062f\u0627",
-      "flag": "assets/images/flags/nl.png",
-      "cities": [
+          "isSupportRT": true,
+          "supportedRideProviders": [
+            "uber",
+            "careem",
+            "yango"
+          ]
+        },
         {
-          "id": "EUSleeper",
-          "nameEn": "EU Sleeper",
-          "nameAr": "\u0642\u0637\u0627\u0631\u0627\u062a \u0623\u0648\u0631\u0648\u0628\u0627 \u0627\u0644\u0644\u064a\u0644\u064a\u0629",
-          "subtitleEn": "European Sleeper Trains (~{} MB)",
-          "subtitleAr": "\u0642\u0637\u0627\u0631\u0627\u062a \u0627\u0644\u0646\u0648\u0645 \u0627\u0644\u0623\u0648\u0631\u0648\u0628\u064a\u0629 (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
-          "countryCode": "NL",
+          "id": "AE_Sharjah",
+          "nameEn": "Sharjah",
+          "nameAr": "الشارقة",
+          "subtitleEn": "Buses (~{} MB)",
+          "subtitleAr": "أتوبيسات (~ {} ميجابايت)",
+          "countryCode": "AE",
           "version": "1.0.0",
-          "gtfsDbPath": "assets/db/NL/eusleeper_gtfs.db",
-          "estimatedSizeMb": 15,
+          "gtfsDbPath": "assets/db/AE/ae_sharjah_gtfs.db",
+          "estimatedSizeMb": 20,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 55.3,
+            "longitudeEast": 55.9,
+            "latitudeSouth": 25.1,
+            "latitudeNorth": 25.5
+          },
+          "attribution": [
+            {
+              "providerName": "SRTA",
+              "descriptionEn": "Sharjah Roads and Transport Authority.",
+              "descriptionAr": "هيئة الطرق والمواصلات - الشارقة.",
+              "url": "https://www.srta.gov.ae/"
+            }
+          ],
+          "dataSources": {
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber",
+            "careem",
+            "yango"
+          ]
+        },
+        {
+          "id": "AE_Ajman",
+          "nameEn": "Ajman",
+          "nameAr": "عجمان",
+          "subtitleEn": "Buses (~{} MB)",
+          "subtitleAr": "أتوبيسات (~ {} ميجابايت)",
+          "countryCode": "AE",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/AE/ae_ajman_gtfs.db",
+          "estimatedSizeMb": 10,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 55.4,
+            "longitudeEast": 55.6,
+            "latitudeSouth": 25.3,
+            "latitudeNorth": 25.5
+          },
+          "attribution": [
+            {
+              "providerName": "Transport Authority",
+              "descriptionEn": "Transport Authority - Government of Ajman.",
+              "descriptionAr": "هيئة النقل - حكومة عجمان.",
+              "url": "https://ta.gov.ae/"
+            }
+          ],
+          "dataSources": {
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber",
+            "careem",
+            "yango"
+          ]
+        },
+        {
+          "id": "AE_Train",
+          "nameEn": " Etihad Rail",
+          "nameAr": "\u0642\u0637\u0627\u0631 \u0627\u0644\u0627\u062a\u062d\u0627\u062f",
+          "subtitleEn": "Etihad Rail (~{} MB)",
+          "subtitleAr": "\u0642\u0637\u0627\u0631 \u0627\u0644\u0627\u062a\u062d\u0627\u062f (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
+          "countryCode": "AE",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/AE/ae_train_gtfs.db",
+          "estimatedSizeMb": 10,
           "isDefaultSelected": false,
           "icon": "train_rounded",
           "bounds": {
-            "longitudeWest": 2.355,
-            "longitudeEast": 14.4361,
-            "latitudeSouth": 45.4846,
-            "latitudeNorth": 53.4557
-          }
+            "longitudeWest": 51.5,
+            "longitudeEast": 56.5,
+            "latitudeSouth": 22.5,
+            "latitudeNorth": 26.0
+          },
+          "dataSources": {
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber",
+            "careem",
+            "yango"
+          ]
         }
       ]
     },
     {
       "code": "UG",
       "nameEn": "Uganda",
-      "nameAr": "\u0623\u0648\u063a\u0646\u062f\u0627",
-      "flag": "assets/images/flags/ug.png",
+      "nameAr": "أوغندا",
+      "flag": "assets/images/flags/ug.svg",
       "cities": [
         {
-          "id": "Kampala",
+          "id": "UG_Kampala",
           "nameEn": "Kampala",
-          "nameAr": "\u0643\u0627\u0645\u0628\u0627\u0644\u0627",
+          "nameAr": "كامبالا",
           "subtitleEn": "Buses, Minibuses (~{} MB)",
           "subtitleAr": "\u0623\u062a\u0648\u0628\u064a\u0633\u0627\u062a\u060c \u062d\u0627\u0641\u0644\u0627\u062a \u0635\u063a\u064a\u0631\u0629 (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
           "countryCode": "UG",
           "version": "1.0.0",
-          "gtfsDbPath": "assets/db/UG/kampala_gtfs.db",
+          "gtfsDbPath": "assets/db/UG/ug_kampala_gtfs.db",
           "estimatedSizeMb": 20,
           "isDefaultSelected": false,
           "icon": "directions_bus_rounded",
           "bounds": {
-            "longitudeWest": 32.4417,
-            "longitudeEast": 32.7504,
-            "latitudeSouth": 0.0555,
-            "latitudeNorth": 0.4652
-          }
+            "longitudeWest": 32.4,
+            "longitudeEast": 32.8,
+            "latitudeSouth": 0.1,
+            "latitudeNorth": 0.5
+          },
+          "attribution": [
+            {
+              "providerName": "Digital Transport for Africa",
+              "descriptionEn": "Kampala public transport data.",
+              "descriptionAr": "بيانات النقل العام في كامبالا.",
+              "url": "https://digitaltransport4africa.org/"
+            }
+          ],
+          "dataSources": {
+            "osmUrl": "https://download.geofabrik.de/africa/uganda-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "NG",
+      "nameEn": "Nigeria",
+      "nameAr": "نيجيريا",
+      "flag": "assets/images/flags/ng.svg",
+      "cities": [
+        {
+          "id": "NG_Lagos",
+          "nameEn": "Lagos",
+          "nameAr": "لاغوس",
+          "subtitleEn": "Buses, Minibuses (~{} MB)",
+          "subtitleAr": "أتوبيسات، حافلات صغيرة (~ {} ميجابايت)",
+          "countryCode": "NG",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/NG/ng_lagos_gtfs.db",
+          "estimatedSizeMb": 2,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 3.1,
+            "longitudeEast": 3.6,
+            "latitudeSouth": 6.3,
+            "latitudeNorth": 6.7
+          },
+          "attribution": [
+            {
+              "providerName": "Lagos State Waterways Authority",
+              "descriptionEn": "Transport data for Lagos.",
+              "descriptionAr": "بيانات النقل العام في لاغوس.",
+              "url": "https://lagoswaterways.com/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://busmaps.com/en/nigeria/Transport-Usa/lagos-state-waterways-authority",
+            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-lagos-state-waterways-authority.zip",
+            "osmUrl": ""
+          },
+          "supportedRideProviders": [
+            "uber"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "KE",
+      "nameEn": "Kenya",
+      "nameAr": "كينيا",
+      "flag": "assets/images/flags/ke.svg",
+      "cities": [
+        {
+          "id": "KE_Nairobi",
+          "nameEn": "Nairobi",
+          "nameAr": "نيروبي",
+          "subtitleEn": "Buses, Matatus (~{} MB)",
+          "subtitleAr": "أتوبيسات، ماتاتوس (~ {} ميجابايت)",
+          "countryCode": "KE",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/KE/ke_nairobi_gtfs.db",
+          "estimatedSizeMb": 4,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 36.6,
+            "longitudeEast": 37.1,
+            "latitudeSouth": -1.5,
+            "latitudeNorth": -1.1
+          },
+          "attribution": [
+            {
+              "providerName": "University of Nairobi / DT4A",
+              "descriptionEn": "Nairobi public transport and Matatu data.",
+              "descriptionAr": "بيانات النقل العام في نيروبي.",
+              "url": "https://digitaltransport4africa.org/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://busmaps.com/en/kenya/University-of-Nairobi/university-of-nairobi",
+            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-university-of-nairobi.zip",
+            "osmUrl": ""
+          },
+          "supportedRideProviders": [
+            "uber"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "MA",
+      "nameEn": "Morocco",
+      "nameAr": "المغرب",
+      "flag": "assets/images/flags/ma.svg",
+      "cities": [
+        {
+          "id": "MA_Tetouan",
+          "nameEn": "Tetouan",
+          "nameAr": "تطوان",
+          "subtitleEn": "Buses (~{} MB)",
+          "subtitleAr": "أتوبيسات (~ {} ميجابايت)",
+          "countryCode": "MA",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/MA/ma_tetouan_gtfs.db",
+          "estimatedSizeMb": 3,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": -6.95,
+            "longitudeEast": -6.8,
+            "latitudeSouth": 33.9,
+            "latitudeNorth": 34.1
+          },
+          "attribution": [
+            {
+              "providerName": "Vitalis Transport",
+              "descriptionEn": "Tetouan public transport data.",
+              "descriptionAr": "بيانات النقل العام في تطوان.",
+              "url": "https://busmaps.com/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://busmaps.com/en/morocco/Vitalis-Transport/vitalis-transport",
+            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-vitalis-transport.zip",
+            "osmUrl": "https://download.geofabrik.de/africa/morocco-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber",
+            "careem"
+          ]
+        },
+        {
+          "id": "MA_Train",
+          "nameEn": "Train",
+          "nameAr": "قطار",
+          "subtitleEn": "Trains (~{} MB)",
+          "subtitleAr": "قطارات (~ {} ميجابايت)",
+          "countryCode": "MA",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/MA/ma_train_gtfs.db",
+          "estimatedSizeMb": 3,
+          "isDefaultSelected": false,
+          "icon": "train_rounded",
+          "bounds": {
+            "longitudeWest": -8.5019,
+            "longitudeEast": -1.2222,
+            "latitudeSouth": 29.5019,
+            "latitudeNorth": 35.8973
+          },
+          "attribution": [
+            {
+              "providerName": "ONCF",
+              "descriptionEn": "National Railways Office of Morocco.",
+              "descriptionAr": "المكتب الوطني للسكك الحديدية في المغرب.",
+              "url": "https://www.oncf.ma/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "ttps://mobilitydatabase.org/feeds/gtfs/mdb-3049",
+            "staticGtfs": "https://files.mobilitydatabase.org/mdb-3049/mdb-3049-202602171452/mdb-3049-202602171452.zip",
+            "osmUrl": "https://download.geofabrik.de/africa/morocco-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber",
+            "careem"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "ZA",
+      "nameEn": "South Africa",
+      "nameAr": "جنوب أفريقيا",
+      "flag": "assets/images/flags/za.svg",
+      "cities": [
+        {
+          "id": "ZA_Gqeberha",
+          "nameEn": "Gqeberha",
+          "nameAr": "جيكيبها",
+          "subtitleEn": "Buses, Trains (~{} MB)",
+          "subtitleAr": "أتوبيسات، قطارات (~ {} ميجابايت)",
+          "countryCode": "ZA",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/ZA/za_gqeberha_gtfs.db",
+          "estimatedSizeMb": 7,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 25.3,
+            "longitudeEast": 25.8,
+            "latitudeSouth": -34.1,
+            "latitudeNorth": -33.7
+          },
+          "attribution": [
+            {
+              "providerName": "Algoa Bus",
+              "descriptionEn": "Gqeberha public transport data.",
+              "descriptionAr": "بيانات النقل العام في جيكيبها (بورت إليزابيث).",
+              "url": "https://algoabus.co.za/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://busmaps.com/en/south-africa/Algoa-Bus/algoa-bus",
+            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-algoa-bus.zip",
+            "osmUrl": "https://download.geofabrik.de/africa/south-africa-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "TN",
+      "nameEn": "Tunisia",
+      "nameAr": "تونس",
+      "flag": "assets/images/flags/tn.svg",
+      "cities": [
+        {
+          "id": "TN_Tunis",
+          "nameEn": "Tunis",
+          "nameAr": "تونس",
+          "subtitleEn": "Buses, Trams (~{} MB)",
+          "subtitleAr": "أتوبيسات، ترام (~ {} ميجابايت)",
+          "countryCode": "TN",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/TN/tn_tunis_gtfs.db",
+          "estimatedSizeMb": 1,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 9.5,
+            "longitudeEast": 10.5,
+            "latitudeSouth": 36.5,
+            "latitudeNorth": 37.3
+          },
+          "attribution": [
+            {
+              "providerName": "SRT / TRANSTU",
+              "descriptionEn": "Tunis and regional public transport data.",
+              "descriptionAr": "بيانات النقل العام في تونس العاصمة.",
+              "url": "https://www.transtu.tn/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://busmaps.com/en/tunisia/transitfeeds/srtmedenine",
+            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-srtmedenine.zip",
+            "osmUrl": "https://download.geofabrik.de/africa/tunisia-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "ZM",
+      "nameEn": "Zambia",
+      "nameAr": "زامبيا",
+      "flag": "assets/images/flags/zm.svg",
+      "cities": [
+        {
+          "id": "ZM_Lusaka",
+          "nameEn": "Lusaka",
+          "nameAr": "لوساكا",
+          "subtitleEn": "Buses (~{} MB)",
+          "subtitleAr": "أتوبيسات (~ {} ميجابايت)",
+          "countryCode": "ZM",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/ZM/zm_lusaka_gtfs.db",
+          "estimatedSizeMb": 3,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 28.2,
+            "longitudeEast": 28.5,
+            "latitudeSouth": -15.5,
+            "latitudeNorth": -15.3
+          },
+          "attribution": [
+            {
+              "providerName": "Digital Transport for Africa",
+              "descriptionEn": "Lusaka public transport data.",
+              "descriptionAr": "بيانات النقل العام في لوساكا.",
+              "url": "https://digitaltransport4africa.org/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://busmaps.com/en/zambia/Digital-Transport4-Africa/lusaka",
+            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-lusaka.zip",
+            "osmUrl": "https://download.geofabrik.de/africa/zambia-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "uber"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "ID",
+      "nameEn": "Indonesia",
+      "nameAr": "إندونيسيا",
+      "flag": "assets/images/flags/id.svg",
+      "cities": [
+        {
+          "id": "ID_Jabodetabek",
+          "nameEn": "Jabodetabek (Greater Jakarta)",
+          "nameAr": "جابوديتابك (جاكرتا الكبرى)",
+          "subtitleEn": "MRT, LRT, Buses, Microbuses (~{} MB)",
+          "subtitleAr": "مترو الأنفاق، ترام، أتوبيسات، ميكروباصات (~ {} ميجابايت)",
+          "countryCode": "ID",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/ID/id_jabodetabek_gtfs.db",
+          "estimatedSizeMb": 80,
+          "isDefaultSelected": false,
+          "icon": "subway_rounded",
+          "bounds": {
+            "longitudeWest": 106.6,
+            "longitudeEast": 107.0,
+            "latitudeSouth": -6.6,
+            "latitudeNorth": -6.1
+          },
+          "dataSources": {
+            "feeds": [
+              {
+                "id": "ID_Jakarta",
+                "pipelineType": "download",
+                "staticGtfs": "https://gtfs.transjakarta.co.id/files/file_gtfs.zip",
+                "osmUrl": "https://download.geofabrik.de/asia/indonesia-latest.osm.pbf"
+              },
+              {
+                "id": "ID_Bogor",
+                "pipelineType": "download",
+                "staticGtfs": "https://blues3.transitpdf.com/files/uran/improved-gtfs-sariksma-bogor/c7b13be5a049f479.zip",
+                "osmUrl": "https://download.geofabrik.de/asia/indonesia-latest.osm.pbf"
+              }
+            ]
+          },
+          "supportedRideProviders": [
+            "grab"
+          ]
+        },
+        {
+          "id": "ID_Bali",
+          "nameEn": "Bali (Denpasar, Ubud)",
+          "nameAr": "بالي (دينباسار، أوبود)",
+          "subtitleEn": "Buses (~{} MB)",
+          "subtitleAr": "أتوبيسات (~ {} ميجابايت)",
+          "countryCode": "ID",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/ID/id_bali_gtfs.db",
+          "estimatedSizeMb": 20,
+          "isDefaultSelected": false,
+          "icon": "directions_bus_rounded",
+          "bounds": {
+            "longitudeWest": 106.8,
+            "longitudeEast": 106.9,
+            "latitudeSouth": -6.3,
+            "latitudeNorth": -6.2
+          },
+          "subAreas": [
+            {
+              "id": "ID_Denpasar",
+              "nameEn": "Denpasar",
+              "attribution": [
+                {
+                  "providerName": "Transport for Bali",
+                  "descriptionEn": "Public transport static schedule and route data for Indonesia.",
+                  "descriptionAr": "بيانات جدول النقل العام الثابتة ومسارات الخطوط في إندونيسيا.",
+                  "url": "https://data.transportforbali.com/"
+                }
+              ],
+              "dataSources": {
+                "sourceUrl": "https://busmaps.com/en/indonesia/Bali-Transit-Project/bali-transit-project",
+                "staticGtfs": "https://blues3.transitpdf.com/files/uran/improved-gtfs-bali-transit-project/d98cb9ebe1db2320.zip",
+                "osmUrl": "https://download.geofabrik.de/asia/indonesia-latest.osm.pbf"
+              }
+            },
+            {
+              "id": "ID_Kuta",
+              "nameEn": "Kuta"
+            },
+            {
+              "id": "ID_Sanur",
+              "nameEn": "Sanur"
+            }
+          ],
+          "supportedRideProviders": [
+            "grab"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "MY",
+      "nameEn": "Malaysia",
+      "nameAr": "ماليزيا",
+      "flag": "assets/images/flags/my.svg",
+      "cities": [
+        {
+          "id": "MY_Rail",
+          "nameEn": "Rail",
+          "nameAr": "السكك الحديدية",
+          "subtitleEn": "Tram/Rail",
+          "subtitleAr": "ترام / رايل",
+          "countryCode": "MY",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/MY/my_rail_gtfs.db",
+          "estimatedSizeMb": 3,
+          "isDefaultSelected": false,
+          "icon": "tram_rounded",
+          "bounds": {
+            "longitudeWest": 101.46,
+            "longitudeEast": 101.8,
+            "latitudeSouth": 2.9,
+            "latitudeNorth": 3.4
+          },
+          "attribution": [
+            {
+              "providerName": "Prasarana Malaysia",
+              "descriptionEn": "RapidKL transit data provided by Data.gov.my.",
+              "descriptionAr": "بيانات قطارات رابيد كيه إل في ماليزيا.",
+              "url": "https://developer.data.gov.my/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://developer.data.gov.my/realtime-api/gtfs-static",
+            "staticGtfs": "https://api.data.gov.my/gtfs-static/prasarana?category=rapid-rail-kl",
+            "osmUrl": "https://download.geofabrik.de/asia/malaysia-singapore-brunei-latest.osm.pbf"
+          },
+          "supportedRideProviders": [
+            "grab"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "NL",
+      "nameEn": "Netherlands",
+      "nameAr": "هولندا",
+      "flag": "assets/images/flags/nl.svg",
+      "cities": [
+        {
+          "id": "NL_EU_Sleeper_Train",
+          "nameEn": "EU Sleeper Train",
+          "nameAr": "قطار النوم في الاتحاد الأوروبي",
+          "subtitleEn": "EU Sleeper Train (~{} MB)",
+          "subtitleAr": "قطار النوم في الاتحاد الأوروبي (~ {} ميجابايت)",
+          "countryCode": "NL",
+          "version": "1.0.0",
+          "gtfsDbPath": "assets/db/NL/nl_amsterdam_gtfs.db",
+          "estimatedSizeMb": 20,
+          "isDefaultSelected": false,
+          "icon": "train_rounded",
+          "bounds": {
+            "longitudeWest": 4.845,
+            "longitudeEast": 4.94,
+            "latitudeSouth": 52.31,
+            "latitudeNorth": 52.395
+          },
+          "attribution": [
+            {
+              "providerName": "JBB GTFS",
+              "descriptionEn": "Public transport GTFS feeds for railway lines across Europe.",
+              "descriptionAr": "بيانات GTFS للنقل العام لخطوط السكك الحديدية في جميع أنحاء أوروبا.",
+              "url": "https://jbb.ghsq.de/gtfs/"
+            }
+          ],
+          "dataSources": {
+            "sourceUrl": "https://mobilitydatabase.org/feeds/gtfs/mdb-3107",
+            "staticGtfs": "https://files.mobilitydatabase.org/mdb-3107/mdb-3107-202608090107/mdb-3107-202608090107.zip",
+            "osmUrl": "https://download.geofabrik.de/europe/netherlands-latest.osm.pbf"
+          },
+          "isSupportRT": false,
+          "supportedRideProviders": [
+            "uber"
+          ]
         }
       ]
     },
     {
       "code": "OM",
       "nameEn": "Oman",
-      "nameAr": "\u0639\u064f\u0645\u0627\u0646",
+      "nameAr": "عُمان",
       "flag": "assets/images/flags/om.svg",
       "cities": [
         {
-          "id": "Oman",
+          "id": "OM_Oman",
           "nameEn": "Oman",
-          "nameAr": "\u0639\u064f\u0645\u0627\u0646",
+          "nameAr": "عُمان",
           "subtitleEn": "Mwasalat Buses (~{} MB)",
-          "subtitleAr": "\u0645\u0648\u0627\u0635\u0644\u0627\u062a (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
+          "subtitleAr": "مواصلات (~ {} ميجابايت)",
           "countryCode": "OM",
           "version": "1.0.0",
-          "gtfsDbPath": "assets/db/OM/oman_gtfs.db",
+          "gtfsDbPath": "assets/db/OM/om_oman_gtfs.db",
           "estimatedSizeMb": 20,
           "isDefaultSelected": false,
           "icon": "directions_bus_rounded",
@@ -278,7 +876,7 @@
             {
               "providerName": "Mwasalat",
               "descriptionEn": "Official public transport static schedule and realtime data in Oman.",
-              "descriptionAr": "\u0628\u064a\u0627\u0646\u0627\u062a \u062c\u062f\u0648\u0644 \u0627\u0644\u0646\u0642\u0644 \u0627\u0644\u0639\u0627\u0645 \u0627\u0644\u062b\u0627\u0628\u062a\u0629 \u0648\u0627\u0644\u0645\u0628\u0627\u0634\u0631\u0629 \u0627\u0644\u0631\u0633\u0645\u064a\u0629 \u0641\u064a \u0639\u064f\u0645\u0627\u0646.",
+              "descriptionAr": "بيانات جدول النقل العام الثابتة والمباشرة الرسمية في عُمان.",
               "url": "https://mwasalat.om/"
             }
           ],
@@ -286,44 +884,15 @@
             "sourceUrl": "https://www.transit.land/feeds/f-mwasalat",
             "staticGtfs": "https://avl.mwasalat.om/data/gtfs/gtfs.zip",
             "gtfsRtVehiclePositions": "https://avl.mwasalat.om/data/gtfs/vehicle-positions.pb",
-            "gtfsRtTripUpdates": "https://avl.mwasalat.om/data/gtfs/trip-updates.pb"
+            "gtfsRtTripUpdates": "https://avl.mwasalat.om/data/gtfs/trip-updates.pb",
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
           },
-          "isSupportRT": true
+          "isSupportRT": true,
+          "supportedRideProviders": [
+            "uber",
+            "careem"
+          ]
         }
-      ]
-    },
-    {
-      "code": "MY",
-      "nameEn": "Malaysia",
-      "nameAr": "\u0645\u0627\u0644\u064a\u0632\u064a\u0627",
-      "flag": "assets/images/flags/my.svg",
-      "cities": [
-        {
-          "id": "Rail",
-          "nameEn": "Rail",
-          "nameAr": "\u0627\u0644\u0633\u0643\u0643 \u0627\u0644\u062d\u062f\u064a\u062f\u064a\u0629",
-          "subtitleEn": "Tram/Rail",
-          "subtitleAr": "\u062a\u0631\u0627\u0645 / \u0631\u0627\u064a\u0644",
-          "countryCode": "MY",
-          "version": "1.0.0",
-          "gtfsDbPath": "assets/db/MY/rail_gtfs.db",
-          "estimatedSizeMb": 3,
-          "isDefaultSelected": false,
-          "icon": "tram_rounded",
-          "bounds": {
-            "longitudeWest": 101.466667,
-            "longitudeEast": 101.733333,
-            "latitudeSouth": 3.05,
-            "latitudeNorth": 3.383333
-          },
-          "dataSources": {
-            "sourceUrl": "https://developer.data.gov.my/realtime-api/gtfs-static",
-            "staticGtfs": "https://api.data.gov.my/gtfs-static/prasarana?category=rapid-rail-kl",
-            "gtfsRtVehiclePositions": "https://api.data.gov.my/gtfs-realtime/vehicle-position/prasarana?category=rapid-rail-kl",
-            "gtfsRtTripUpdates": "https://api.data.gov.my/gtfs-realtime/trip-updates/prasarana?category=rapid-rail-kl"
-          }
-        },
-        {}
       ]
     }
   ]
