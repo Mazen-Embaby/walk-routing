@@ -8,19 +8,19 @@ function getSupportedProviders(countryCode: string, pLat: number, pLng: number):
     const fileContents = fs.readFileSync(configPath, 'utf8');
     const regionsConfig = JSON.parse(fileContents);
 
-    const countryObj = regionsConfig.regions.find((c: any) => c.code === countryCode);
-    if (!countryObj || !countryObj.cities) return [];
+    const countryObj = regionsConfig.countries.find((c: any) => c.code === countryCode);
+    if (!countryObj || !countryObj.regions) return [];
 
-    for (const city of countryObj.cities) {
-      if (city.bounds) {
-        const { latitudeSouth, latitudeNorth, longitudeWest, longitudeEast } = city.bounds;
+    for (const region of countryObj.regions) {
+      if (region.bounds) {
+        const { latitudeSouth, latitudeNorth, longitudeWest, longitudeEast } = region.bounds;
         if (
           pLat >= latitudeSouth &&
           pLat <= latitudeNorth &&
           pLng >= longitudeWest &&
           pLng <= longitudeEast
         ) {
-          return city.supportedRideProviders || [];
+          return region.supportedRideProviders || [];
         }
       }
     }

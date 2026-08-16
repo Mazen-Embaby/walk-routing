@@ -7,9 +7,9 @@ export async function GET(request: Request) {
   const routeId = searchParams.get('routeId');
   const stopId = searchParams.get('stopId');
 
-  const country = regionsConfig.regions.find(r => r.code === 'OM');
-  const city = country?.cities.find(c => c.id === 'Oman') as any;
-  const feedUrl = city?.dataSources?.gtfsRtTripUpdates;
+  const country = regionsConfig.countries.find((r: any) => r.code === 'OM');
+  const region = country?.regions.find((c: any) => c.id === 'OM_Oman') as any;
+  const feedUrl = region?.dataSources?.gtfsRtTripUpdates;
 
   if (!feedUrl || feedUrl === '') {
     return NextResponse.json({ error: `No GTFS-RT Trip Updates feed found for region Oman` }, { status: 404 });

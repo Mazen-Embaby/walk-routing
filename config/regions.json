@@ -1,11 +1,11 @@
 {
-  "regions": [
+  "countries": [
     {
       "code": "EG",
       "nameEn": "Egypt",
       "nameAr": "مصر",
       "flag": "assets/images/flags/eg.svg",
-      "cities": [
+      "regions": [
         {
           "id": "EG_Cairo",
           "nameEn": "Greater Cairo",
@@ -151,7 +151,7 @@
       "nameEn": "United Arab Emirates",
       "nameAr": "الإمارات العربية المتحدة",
       "flag": "assets/images/flags/ae.svg",
-      "cities": [
+      "regions": [
         {
           "id": "AE_Dubai",
           "nameEn": "Dubai",
@@ -335,7 +335,7 @@
       "nameEn": "Uganda",
       "nameAr": "أوغندا",
       "flag": "assets/images/flags/ug.svg",
-      "cities": [
+      "regions": [
         {
           "id": "UG_Kampala",
           "nameEn": "Kampala",
@@ -376,7 +376,7 @@
       "nameEn": "Nigeria",
       "nameAr": "نيجيريا",
       "flag": "assets/images/flags/ng.svg",
-      "cities": [
+      "regions": [
         {
           "id": "NG_Lagos",
           "nameEn": "Lagos",
@@ -419,7 +419,7 @@
       "nameEn": "Kenya",
       "nameAr": "كينيا",
       "flag": "assets/images/flags/ke.svg",
-      "cities": [
+      "regions": [
         {
           "id": "KE_Nairobi",
           "nameEn": "Nairobi",
@@ -462,7 +462,7 @@
       "nameEn": "Morocco",
       "nameAr": "المغرب",
       "flag": "assets/images/flags/ma.svg",
-      "cities": [
+      "regions": [
         {
           "id": "MA_Tetouan",
           "nameEn": "Tetouan",
@@ -542,7 +542,7 @@
       "nameEn": "South Africa",
       "nameAr": "جنوب أفريقيا",
       "flag": "assets/images/flags/za.svg",
-      "cities": [
+      "regions": [
         {
           "id": "ZA_Gqeberha",
           "nameEn": "Gqeberha",
@@ -585,7 +585,7 @@
       "nameEn": "Tunisia",
       "nameAr": "تونس",
       "flag": "assets/images/flags/tn.svg",
-      "cities": [
+      "regions": [
         {
           "id": "TN_Tunis",
           "nameEn": "Tunis",
@@ -628,7 +628,7 @@
       "nameEn": "Zambia",
       "nameAr": "زامبيا",
       "flag": "assets/images/flags/zm.svg",
-      "cities": [
+      "regions": [
         {
           "id": "ZM_Lusaka",
           "nameEn": "Lusaka",
@@ -671,7 +671,7 @@
       "nameEn": "Indonesia",
       "nameAr": "إندونيسيا",
       "flag": "assets/images/flags/id.svg",
-      "cities": [
+      "regions": [
         {
           "id": "ID_Jabodetabek",
           "nameEn": "Jabodetabek (Greater Jakarta)",
@@ -766,7 +766,7 @@
       "nameEn": "Malaysia",
       "nameAr": "ماليزيا",
       "flag": "assets/images/flags/my.svg",
-      "cities": [
+      "regions": [
         {
           "id": "MY_Rail",
           "nameEn": "Rail",
@@ -809,7 +809,7 @@
       "nameEn": "Netherlands",
       "nameAr": "هولندا",
       "flag": "assets/images/flags/nl.svg",
-      "cities": [
+      "regions": [
         {
           "id": "NL_EU_Sleeper_Train",
           "nameEn": "EU Sleeper Train",
@@ -853,7 +853,7 @@
       "nameEn": "Oman",
       "nameAr": "عُمان",
       "flag": "assets/images/flags/om.svg",
-      "cities": [
+      "regions": [
         {
           "id": "OM_Oman",
           "nameEn": "Oman",

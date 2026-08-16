@@ -7,9 +7,9 @@ export async function GET(request: Request) {
   const routeId = searchParams.get('routeId');
   const vehicleId = searchParams.get('vehicleId');
 
-  const country = regionsConfig.regions.find(r => r.code === 'MY');
-  const city = country?.cities.find(c => c.id === 'Rail') as any;
-  const feedUrl = city?.dataSources?.gtfsRtVehiclePositions;
+  const country = regionsConfig.countries.find((r: any) => r.code === 'MY');
+  const region = country?.regions.find((c: any) => c.id === 'MY_Rail') as any;
+  const feedUrl = region?.dataSources?.gtfsRtVehiclePositions;
 
   if (!feedUrl || feedUrl === '') {
     return NextResponse.json({ error: `No GTFS-RT Vehicle Positions feed found for region MY Rail` }, { status: 404 });
