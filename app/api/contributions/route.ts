@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate subcategory
-    const validSubcategories = ['new_route', 'stop', 'shape', 'schedule', 'deprecated_route'];
+    const validSubcategories = ['new_route', 'stop', 'shape', 'schedule', 'deprecated_route', 'fare'];
     if (!validSubcategories.includes(subcategory)) {
       return NextResponse.json(
         { error: `subcategory must be one of: ${validSubcategories.join(', ')}` },
