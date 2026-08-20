@@ -50,6 +50,11 @@ Production branches should be mapped directly inside the main `.env` file (or yo
    ```bash
    npx prisma db push
    ```
+   or 
+   ```bash
+   pnpm prisma db push
+
+   ```
 3. Build and start the production server locally (to test exactly what Vercel will deploy):
    ```bash
    npm run build

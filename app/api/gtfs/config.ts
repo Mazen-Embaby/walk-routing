@@ -46,9 +46,8 @@ export function getCatalogMap(): GtfsCatalogMap {
   let jsonToParse = currentEnvString.trim();
   
   // 1. The bulletproof way: Base64 encoding. 
-  // Base64 encoded JSON objects always start with "ew" (Base64 for '{' followed by any char)
-  // For example: '{"' is 'eyJ', '{\n' is 'ewo', '{ ' is 'eyA'
-  if (jsonToParse.startsWith("ew")) {
+  // Base64 encoded JSON objects always start with "ey" (Base64 for '{"') or "ew" (for '{ ')
+  if (jsonToParse.startsWith("ey") || jsonToParse.startsWith("ew")) {
     try {
       jsonToParse = Buffer.from(jsonToParse, 'base64').toString('utf-8');
     } catch (e) {
