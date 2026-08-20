@@ -45,7 +45,8 @@ export const auth = betterAuth({
         // }),
     },
     trustedOrigins: [
-        "myapp://",
+        "meshwark://",
+        "https://ezayarooh.com",
         "https://appleid.apple.com",
         ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
         ...(process.env.VERCEL_PROJECT_PRODUCTION_URL ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`] : [])
