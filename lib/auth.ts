@@ -52,7 +52,15 @@ export const auth = betterAuth({
         ...(process.env.VERCEL_PROJECT_PRODUCTION_URL ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`] : [])
     ], // Include AppInfo.website and Vercel preview URLs
     plugins: [
-        anonymous(),
+        anonymous({
+            onLinkAccount: async ({ anonymousUser, newUser }) => {
+                await prisma.contribution.updateMany({
+                    where: { userId: anonymousUser.user.id },
+                    data: { userId: newUser.user.id }
+                });
+                console.log(`[AUTH] Linked anonymous user ${anonymousUser.user.id} to new user ${newUser.user.id}`);
+            }
+        }),
         bearer(),
         expo(),
     ],
