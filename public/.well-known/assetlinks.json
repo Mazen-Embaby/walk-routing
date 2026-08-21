@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.daeeim.meshwark.meshwark",
+      "sha256_cert_fingerprints": [
+        "F9:27:8F:0B:BC:21:62:94:AE:B4:2E:4C:38:AE:29:42:14:A0:55:59:08:61:BE:2D:DB:7A:71:28:08:12:44:A7",
+        "B8:70:1D:AB:B8:13:7E:88:8F:E5:29:C1:78:A2:C8:1B:A3:DA:50:88:FC:33:EB:6E:19:E5:80:FF:7F:DD:86:81"
+      ]
+    }
+  }
+]
