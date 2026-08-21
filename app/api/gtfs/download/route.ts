@@ -106,6 +106,7 @@ async function handleDownloadRequest(request: Request) {
       });
       payload = result.payload;
     } catch (jwtErr: any) {
+      console.error("[OTTR Debug] jwtVerify failed:", jwtErr?.message);
       return NextResponse.json(
         { error: "Invalid or expired download token", details: jwtErr?.message },
         { status: 403 }
@@ -114,6 +115,7 @@ async function handleDownloadRequest(request: Request) {
 
     const { jti, country, region, version } = payload;
     if (!jti || !country || !region) {
+      console.error("[OTTR Debug] Missing claims:", payload);
       return NextResponse.json(
         { error: "Token payload missing required claims ('jti', 'country', 'region')" },
         { status: 403 }
@@ -128,18 +130,21 @@ async function handleDownloadRequest(request: Request) {
     const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
     if (redisUrl && redisToken) {
       try {
-        const res = await fetch(`${redisUrl}/set/ottr:${jti}/1?NX=true&EX=60`, {
+        // Upstash REST API expects arguments as path segments: /set/key/value/EX/60/NX
+        const res = await fetch(`${redisUrl}/set/ottr:${jti}/1/EX/60/NX`, {
           method: "POST",
           headers: { Authorization: `Bearer ${redisToken}` },
         });
         const data = await res.json().catch(() => ({}));
         // If result is NOT "OK", NX failed because the key ottr:jti already exists
         if (data?.result !== "OK") {
+          console.error("[OTTR Debug] Upstash Redis check failed or token consumed. Response:", data);
           isConsumed = true;
         }
       } catch (redisErr) {
         console.warn("Upstash Redis connection error during OTTR check, falling back to memory:", redisErr);
         if (globalThis._ottrConsumedTokens?.has(jti)) {
+          console.error("[OTTR Debug] Memory fallback: Token already consumed");
           isConsumed = true;
         } else {
           globalThis._ottrConsumedTokens?.add(jti);
@@ -148,6 +153,7 @@ async function handleDownloadRequest(request: Request) {
     } else {
       // Memory fallback for local development or when Redis is not configured
       if (globalThis._ottrConsumedTokens?.has(jti)) {
+        console.error("[OTTR Debug] Memory cache: Token already consumed");
         isConsumed = true;
       } else {
         globalThis._ottrConsumedTokens?.add(jti);

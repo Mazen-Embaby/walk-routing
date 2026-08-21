@@ -55,7 +55,7 @@ async function handleManifestRequest(request: Request) {
       .sign(OTTR_SECRET);
 
     // Resolve base origin for the download URL
-    const origin = new URL(request.url).origin;
+    const origin = process.env.APP_URL || new URL(request.url).origin;
     const downloadUrl = `${origin}/api/gtfs/download?token=${token}`;
 
     return NextResponse.json({
