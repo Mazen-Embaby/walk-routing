@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import regionsConfig from '../../../../config/regions.json';
 
 function getSupportedProviders(countryCode: string, pLat: number, pLng: number): string[] {
   try {
-    const configPath = path.join(process.cwd(), 'config', 'regions.json');
-    const fileContents = fs.readFileSync(configPath, 'utf8');
-    const regionsConfig = JSON.parse(fileContents);
-
     const countryObj = regionsConfig.countries.find((c: any) => c.code === countryCode);
     if (!countryObj || !countryObj.regions) return [];
 
@@ -79,33 +74,58 @@ export async function GET(request: NextRequest) {
     let localCurrency = 'USD';
     let etaMinutes = 0;
 
-    switch (provider.toLowerCase()) {
-      case 'uber':
-        minFare = Math.round(mockDistanceKm * 1.2 + 5.0); // $5 base + $1.2/km
-        maxFare = Math.round(minFare * 1.3);
-        localCurrency = 'USD';
-        etaMinutes = Math.floor(Math.random() * 5) + 2; // 2 to 6 minutes
-        break;
-      case 'careem':
-        minFare = Math.round(mockDistanceKm * 3.5 + 15.0); // AED 15 base + 3.5/km
-        maxFare = Math.round(minFare * 1.25);
-        localCurrency = 'AED';
-        etaMinutes = Math.floor(Math.random() * 8) + 3; // 3 to 10 minutes
-        break;
-      case 'grab':
-        minFare = Math.round(mockDistanceKm * 4.0 + 10.0); // MYR 10 base + 4/km
-        maxFare = Math.round(minFare * 1.4);
-        localCurrency = 'MYR';
-        etaMinutes = Math.floor(Math.random() * 10) + 1; // 1 to 10 minutes
-        break;
-      case 'yango':
-        minFare = Math.round(mockDistanceKm * 3.0 + 12.0); // AED 12 base + 3/km
-        maxFare = Math.round(minFare * 1.3);
-        localCurrency = 'AED';
-        etaMinutes = Math.floor(Math.random() * 7) + 2; // 2 to 8 minutes
-        break;
-      default:
-        continue;
+    if (country === 'EG') {
+      switch (provider.toLowerCase()) {
+        case 'uber':
+          minFare = Math.max(20, Math.round(mockDistanceKm * 4.0 + 15.0));
+          maxFare = Math.round(minFare * 1.3);
+          localCurrency = 'EGP';
+          etaMinutes = Math.floor(Math.random() * 5) + 2; 
+          break;
+        case 'careem':
+          minFare = Math.max(15, Math.round(mockDistanceKm * 4.0 + 12.0));
+          maxFare = Math.round(minFare * 1.25);
+          localCurrency = 'EGP';
+          etaMinutes = Math.floor(Math.random() * 8) + 3; 
+          break;
+        case 'yango':
+          minFare = Math.max(12, Math.round(mockDistanceKm * 3.5 + 10.0));
+          maxFare = Math.round(minFare * 1.3);
+          localCurrency = 'EGP';
+          etaMinutes = Math.floor(Math.random() * 7) + 2; 
+          break;
+        default:
+          continue;
+      }
+    } else {
+      switch (provider.toLowerCase()) {
+        case 'uber':
+          minFare = Math.round(mockDistanceKm * 1.2 + 5.0); // $5 base + $1.2/km
+          maxFare = Math.round(minFare * 1.3);
+          localCurrency = 'USD';
+          etaMinutes = Math.floor(Math.random() * 5) + 2; // 2 to 6 minutes
+          break;
+        case 'careem':
+          minFare = Math.round(mockDistanceKm * 3.5 + 15.0); // AED 15 base + 3.5/km
+          maxFare = Math.round(minFare * 1.25);
+          localCurrency = 'AED';
+          etaMinutes = Math.floor(Math.random() * 8) + 3; // 3 to 10 minutes
+          break;
+        case 'grab':
+          minFare = Math.round(mockDistanceKm * 4.0 + 10.0); // MYR 10 base + 4/km
+          maxFare = Math.round(minFare * 1.4);
+          localCurrency = 'MYR';
+          etaMinutes = Math.floor(Math.random() * 10) + 1; // 1 to 10 minutes
+          break;
+        case 'yango':
+          minFare = Math.round(mockDistanceKm * 3.0 + 12.0); // AED 12 base + 3/km
+          maxFare = Math.round(minFare * 1.3);
+          localCurrency = 'AED';
+          etaMinutes = Math.floor(Math.random() * 7) + 2; // 2 to 8 minutes
+          break;
+        default:
+          continue;
+      }
     }
 
     // Convert from localCurrency to requestedCurrency

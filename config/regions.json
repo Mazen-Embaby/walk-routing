@@ -111,7 +111,15 @@
             }
           ],
           "dataSources": {
-            "osmUrl": "https://download.geofabrik.de/africa/egypt-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/africa/egypt-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "EG_Alexandria",
+                "pipelineType": "repo",
+                "gtfsDirName": "",
+                "addVirtualStops": true
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber",
@@ -137,7 +145,15 @@
             "latitudeNorth": 32.0
           },
           "dataSources": {
-            "osmUrl": "https://download.geofabrik.de/africa/egypt-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/africa/egypt-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "EG_Train",
+                "pipelineType": "repo",
+                "gtfsDirName": "",
+                "addVirtualStops": true
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber",
@@ -179,11 +195,18 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://data.dubai/en/l/464468",
-            "staticGtfs": "https://data.dubai/en/l/464468",
-            "gtfsRtVehiclePositions": "",
-            "gtfsRtTripUpdates": "",
-            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "AE_Dubai",
+                "pipelineType": "download",
+                "staticGtfs": "https://data.dubai/en/l/464468",
+                "sourceUrl": "https://data.dubai/en/l/464468",
+                "gtfsRtTripUpdates": "",
+                "gtfsRtVehiclePositions": "",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber",
@@ -218,11 +241,18 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://darbi.itc.gov.ae/",
-            "staticGtfs": "",
-            "gtfsRtVehiclePositions": "",
-            "gtfsRtTripUpdates": "darbi-api",
-            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "AE_AbuDhabi",
+                "pipelineType": "download",
+                "staticGtfs": "",
+                "sourceUrl": "https://darbi.itc.gov.ae/",
+                "gtfsRtTripUpdates": "darbi-api",
+                "gtfsRtVehiclePositions": "",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "isSupportRT": true,
           "supportedRideProviders": [
@@ -258,7 +288,15 @@
             }
           ],
           "dataSources": {
-            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "AE_Sharjah",
+                "pipelineType": "repo",
+                "gtfsDirName": "",
+                "addVirtualStops": true
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber",
@@ -293,7 +331,15 @@
             }
           ],
           "dataSources": {
-            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "AE_Ajman",
+                "pipelineType": "repo",
+                "gtfsDirName": "",
+                "addVirtualStops": true
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber",
@@ -304,9 +350,9 @@
         {
           "id": "AE_Train",
           "nameEn": " Etihad Rail",
-          "nameAr": "\u0642\u0637\u0627\u0631 \u0627\u0644\u0627\u062a\u062d\u0627\u062f",
+          "nameAr": "قطار الاتحاد",
           "subtitleEn": "Etihad Rail (~{} MB)",
-          "subtitleAr": "\u0642\u0637\u0627\u0631 \u0627\u0644\u0627\u062a\u062d\u0627\u062f (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
+          "subtitleAr": "قطار الاتحاد (~ {} ميجابايت)",
           "countryCode": "AE",
           "version": "1.0.0",
           "gtfsDbPath": "assets/db/AE/ae_train_gtfs.db",
@@ -320,7 +366,15 @@
             "latitudeNorth": 26.0
           },
           "dataSources": {
-            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "AE_Train",
+                "pipelineType": "repo",
+                "gtfsDirName": "",
+                "addVirtualStops": true
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber",
@@ -341,7 +395,7 @@
           "nameEn": "Kampala",
           "nameAr": "كامبالا",
           "subtitleEn": "Buses, Minibuses (~{} MB)",
-          "subtitleAr": "\u0623\u062a\u0648\u0628\u064a\u0633\u0627\u062a\u060c \u062d\u0627\u0641\u0644\u0627\u062a \u0635\u063a\u064a\u0631\u0629 (~ {} \u0645\u064a\u062c\u0627\u0628\u0627\u064a\u062a)",
+          "subtitleAr": "أتوبيسات، حافلات صغيرة (~ {} ميجابايت)",
           "countryCode": "UG",
           "version": "1.0.0",
           "gtfsDbPath": "assets/db/UG/ug_kampala_gtfs.db",
@@ -363,7 +417,15 @@
             }
           ],
           "dataSources": {
-            "osmUrl": "https://download.geofabrik.de/africa/uganda-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/africa/uganda-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "UG_Kampala",
+                "pipelineType": "repo",
+                "gtfsDirName": "",
+                "addVirtualStops": true
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber"
@@ -404,9 +466,16 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://busmaps.com/en/nigeria/Transport-Usa/lagos-state-waterways-authority",
-            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-lagos-state-waterways-authority.zip",
-            "osmUrl": ""
+            "osmUrl": "",
+            "feeds": [
+              {
+                "id": "NG_Lagos",
+                "pipelineType": "download",
+                "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-lagos-state-waterways-authority.zip",
+                "sourceUrl": "https://busmaps.com/en/nigeria/Transport-Usa/lagos-state-waterways-authority",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber"
@@ -447,9 +516,16 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://busmaps.com/en/kenya/University-of-Nairobi/university-of-nairobi",
-            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-university-of-nairobi.zip",
-            "osmUrl": ""
+            "osmUrl": "",
+            "feeds": [
+              {
+                "id": "KE_Nairobi",
+                "pipelineType": "download",
+                "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-university-of-nairobi.zip",
+                "sourceUrl": "https://busmaps.com/en/kenya/University-of-Nairobi/university-of-nairobi",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber"
@@ -490,9 +566,16 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://busmaps.com/en/morocco/Vitalis-Transport/vitalis-transport",
-            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-vitalis-transport.zip",
-            "osmUrl": "https://download.geofabrik.de/africa/morocco-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/africa/morocco-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "MA_Tetouan",
+                "pipelineType": "download",
+                "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-vitalis-transport.zip",
+                "sourceUrl": "https://busmaps.com/en/morocco/Vitalis-Transport/vitalis-transport",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber",
@@ -526,9 +609,16 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "ttps://mobilitydatabase.org/feeds/gtfs/mdb-3049",
-            "staticGtfs": "https://files.mobilitydatabase.org/mdb-3049/mdb-3049-202602171452/mdb-3049-202602171452.zip",
-            "osmUrl": "https://download.geofabrik.de/africa/morocco-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/africa/morocco-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "MA_Train",
+                "pipelineType": "download",
+                "staticGtfs": "https://files.mobilitydatabase.org/mdb-3049/mdb-3049-202602171452/mdb-3049-202602171452.zip",
+                "sourceUrl": "ttps://mobilitydatabase.org/feeds/gtfs/mdb-3049",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber",
@@ -570,9 +660,16 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://busmaps.com/en/south-africa/Algoa-Bus/algoa-bus",
-            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-algoa-bus.zip",
-            "osmUrl": "https://download.geofabrik.de/africa/south-africa-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/africa/south-africa-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "ZA_Gqeberha",
+                "pipelineType": "download",
+                "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-algoa-bus.zip",
+                "sourceUrl": "https://busmaps.com/en/south-africa/Algoa-Bus/algoa-bus",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber"
@@ -613,9 +710,16 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://busmaps.com/en/tunisia/transitfeeds/srtmedenine",
-            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-srtmedenine.zip",
-            "osmUrl": "https://download.geofabrik.de/africa/tunisia-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/africa/tunisia-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "TN_Tunis",
+                "pipelineType": "download",
+                "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-srtmedenine.zip",
+                "sourceUrl": "https://busmaps.com/en/tunisia/transitfeeds/srtmedenine",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber"
@@ -656,9 +760,16 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://busmaps.com/en/zambia/Digital-Transport4-Africa/lusaka",
-            "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-lusaka.zip",
-            "osmUrl": "https://download.geofabrik.de/africa/zambia-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/africa/zambia-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "ZM_Lusaka",
+                "pipelineType": "download",
+                "staticGtfs": "https://greens3.transitpdf.com/files/uran/improved-gtfs-lusaka.zip",
+                "sourceUrl": "https://busmaps.com/en/zambia/Digital-Transport4-Africa/lusaka",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "supportedRideProviders": [
             "uber"
@@ -728,33 +839,6 @@
             "latitudeSouth": -6.3,
             "latitudeNorth": -6.2
           },
-          "subAreas": [
-            {
-              "id": "ID_Denpasar",
-              "nameEn": "Denpasar",
-              "attribution": [
-                {
-                  "providerName": "Transport for Bali",
-                  "descriptionEn": "Public transport static schedule and route data for Indonesia.",
-                  "descriptionAr": "بيانات جدول النقل العام الثابتة ومسارات الخطوط في إندونيسيا.",
-                  "url": "https://data.transportforbali.com/"
-                }
-              ],
-              "dataSources": {
-                "sourceUrl": "https://busmaps.com/en/indonesia/Bali-Transit-Project/bali-transit-project",
-                "staticGtfs": "https://blues3.transitpdf.com/files/uran/improved-gtfs-bali-transit-project/d98cb9ebe1db2320.zip",
-                "osmUrl": "https://download.geofabrik.de/asia/indonesia-latest.osm.pbf"
-              }
-            },
-            {
-              "id": "ID_Kuta",
-              "nameEn": "Kuta"
-            },
-            {
-              "id": "ID_Sanur",
-              "nameEn": "Sanur"
-            }
-          ],
           "supportedRideProviders": [
             "grab"
           ]
@@ -794,9 +878,16 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://developer.data.gov.my/realtime-api/gtfs-static",
-            "staticGtfs": "https://api.data.gov.my/gtfs-static/prasarana?category=rapid-rail-kl",
-            "osmUrl": "https://download.geofabrik.de/asia/malaysia-singapore-brunei-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/asia/malaysia-singapore-brunei-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "MY_Rail",
+                "pipelineType": "download",
+                "staticGtfs": "https://api.data.gov.my/gtfs-static/prasarana?category=rapid-rail-kl",
+                "sourceUrl": "https://developer.data.gov.my/realtime-api/gtfs-static",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "supportedRideProviders": [
             "grab"
@@ -837,9 +928,16 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://mobilitydatabase.org/feeds/gtfs/mdb-3107",
-            "staticGtfs": "https://files.mobilitydatabase.org/mdb-3107/mdb-3107-202608090107/mdb-3107-202608090107.zip",
-            "osmUrl": "https://download.geofabrik.de/europe/netherlands-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/europe/netherlands-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "NL_EU_Sleeper_Train",
+                "pipelineType": "download",
+                "staticGtfs": "https://files.mobilitydatabase.org/mdb-3107/mdb-3107-202608090107/mdb-3107-202608090107.zip",
+                "sourceUrl": "https://mobilitydatabase.org/feeds/gtfs/mdb-3107",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "isSupportRT": false,
           "supportedRideProviders": [
@@ -881,11 +979,18 @@
             }
           ],
           "dataSources": {
-            "sourceUrl": "https://www.transit.land/feeds/f-mwasalat",
-            "staticGtfs": "https://avl.mwasalat.om/data/gtfs/gtfs.zip",
-            "gtfsRtVehiclePositions": "https://avl.mwasalat.om/data/gtfs/vehicle-positions.pb",
-            "gtfsRtTripUpdates": "https://avl.mwasalat.om/data/gtfs/trip-updates.pb",
-            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf"
+            "osmUrl": "https://download.geofabrik.de/asia/gcc-states-latest.osm.pbf",
+            "feeds": [
+              {
+                "id": "OM_Oman",
+                "pipelineType": "download",
+                "staticGtfs": "https://avl.mwasalat.om/data/gtfs/gtfs.zip",
+                "sourceUrl": "https://www.transit.land/feeds/f-mwasalat",
+                "gtfsRtTripUpdates": "https://avl.mwasalat.om/data/gtfs/trip-updates.pb",
+                "gtfsRtVehiclePositions": "https://avl.mwasalat.om/data/gtfs/vehicle-positions.pb",
+                "gtfsDirName": ""
+              }
+            ]
           },
           "isSupportRT": true,
           "supportedRideProviders": [
