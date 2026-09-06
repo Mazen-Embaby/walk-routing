@@ -77,22 +77,22 @@ export async function GET(request: NextRequest) {
     if (country === 'EG') {
       switch (provider.toLowerCase()) {
         case 'uber':
-          minFare = Math.max(20, Math.round(mockDistanceKm * 4.0 + 15.0));
+          minFare = Math.max(45, Math.round(mockDistanceKm * 8.0 + 35.0));
           maxFare = Math.round(minFare * 1.3);
           localCurrency = 'EGP';
-          etaMinutes = Math.floor(Math.random() * 5) + 2; 
+          etaMinutes = Math.floor(Math.random() * 5) + 2;
           break;
         case 'careem':
-          minFare = Math.max(15, Math.round(mockDistanceKm * 4.0 + 12.0));
+          minFare = Math.max(40, Math.round(mockDistanceKm * 7.5 + 32.0));
           maxFare = Math.round(minFare * 1.25);
           localCurrency = 'EGP';
-          etaMinutes = Math.floor(Math.random() * 8) + 3; 
+          etaMinutes = Math.floor(Math.random() * 8) + 3;
           break;
         case 'yango':
-          minFare = Math.max(12, Math.round(mockDistanceKm * 3.5 + 10.0));
+          minFare = Math.max(30, Math.round(mockDistanceKm * 6.0 + 25.0));
           maxFare = Math.round(minFare * 1.3);
           localCurrency = 'EGP';
-          etaMinutes = Math.floor(Math.random() * 7) + 2; 
+          etaMinutes = Math.floor(Math.random() * 7) + 2;
           break;
         default:
           continue;
@@ -130,7 +130,7 @@ export async function GET(request: NextRequest) {
 
     // Convert from localCurrency to requestedCurrency
     const localRate = EXCHANGE_RATES[localCurrency] || 1.0;
-    
+
     // (Amount / LocalRate) = Amount in USD. Then * TargetRate
     const finalMinFare = Math.round((minFare / localRate) * targetRate);
     const finalMaxFare = Math.round((maxFare / localRate) * targetRate);
