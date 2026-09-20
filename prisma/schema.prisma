@@ -26,7 +26,7 @@ model Contribution {
   points      Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  user        User?    @relation(fields: [userId], references: [id])
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([fcmToken])
   @@index([status])
@@ -44,8 +44,10 @@ model User {
   updatedAt     DateTime
   isAnonymous   Boolean?
   sessions      Session[]
-  accounts      Account[]
-  contributions Contribution[]
+  accounts       Account[]
+  contributions  Contribution[]
+  favoriteRoutes FavoriteRoute[]
+  favoritePlaces FavoritePlace[]
 
   @@map("user")
   @@schema("auth")
@@ -100,4 +102,38 @@ model Verification {
   @@map("verification")
   @@index([identifier])
   @@schema("auth")
+}
+
+model FavoriteRoute {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  routeType  String   // 'transit' or 'rail'
+  countryISO String   @db.Char(2) // ISO 3166-1 alpha-2 (e.g. 'EG', 'SA')
+  regionId   String
+  routeId    String   // route ID or rail trip ID
+  
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, routeType, regionId, routeId])
+  @@index([userId])
+  @@index([countryISO])
+  @@schema("public")
+}
+
+model FavoritePlace {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name      String
+  latitude  Float
+  longitude Float
+  address   String?
+  
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@schema("public")
 }
