@@ -9,14 +9,15 @@ export async function GET(request: Request) {
 
   const country = regionsConfig.countries.find((r: any) => r.code === 'OM');
   const region = country?.regions.find((c: any) => c.id === 'OM_Oman') as any;
-  const feedUrl = region?.dataSources?.gtfsRtVehiclePositions;
+  const feedUrl = region?.dataSources?.feeds?.[0]?.gtfsRtVehiclePositions;
 
   if (!feedUrl || feedUrl === '') {
-    return NextResponse.json({ error: `No GTFS-RT Vehicle Positions feed found for region Oman` }, { status: 404 });
+    return NextResponse.json({ error: `No GTFS-RT Vehicle Positions feed found for region OM_Oman` }, { status: 404 });
   }
 
   try {
     const data = await fetchGtfsRtVehicles(feedUrl, routeId, vehicleId);
+    
     return NextResponse.json(data, {
       status: 200,
       headers: {
@@ -24,7 +25,7 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error('Error fetching Oman Vehicles:', error);
+    console.error('Error fetching OM_Oman Vehicles:', error);
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }

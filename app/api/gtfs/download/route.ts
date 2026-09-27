@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 import { getRegionConfig } from "../config";
-import { getApps, initializeApp, cert } from "firebase-admin/app";
 import { getStorage } from "firebase-admin/storage";
+import { ensureFirebaseAdmin } from "@/lib/firebase";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,25 +10,6 @@ export const dynamic = "force-dynamic";
 const OTTR_SECRET = new TextEncoder().encode(
   process.env.GTFS_OTTR_SECRET || "default-ottr-secret-key-change-in-prod-12345"
 );
-
-function ensureFirebaseAdmin() {
-  if (getApps().length === 0) {
-    const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-    if (serviceAccountKey) {
-      try {
-        const serviceAccount = JSON.parse(serviceAccountKey);
-        initializeApp({
-          credential: cert(serviceAccount),
-        });
-      } catch (err) {
-        console.error("Failed to parse FIREBASE_SERVICE_ACCOUNT_KEY:", err);
-        initializeApp();
-      }
-    } else {
-      initializeApp();
-    }
-  }
-}
 
 /**
  * Parses a GCS CDN URL (e.g., https://storage.googleapis.com/multi-transit-gtfs/cairo_gtfs.db or gs://...)

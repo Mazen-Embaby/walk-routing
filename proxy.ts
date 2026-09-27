@@ -1,28 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { initializeApp, getApps, cert } from 'firebase-admin/app';
 import { getAppCheck } from "firebase-admin/app-check";
-
-function ensureFirebaseAdmin() {
-
-
-  if (getApps().length === 0) {
-    const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-    if (serviceAccountKey) {
-      try {
-        const serviceAccount = JSON.parse(serviceAccountKey);
-        initializeApp({
-          credential: cert(serviceAccount),
-        });
-      } catch (err) {
-        console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT_KEY:', err);
-        initializeApp();
-      }
-    } else {
-      initializeApp();
-    }
-  }
-}
+import { ensureFirebaseAdmin } from '@/lib/firebase';
 
 export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;

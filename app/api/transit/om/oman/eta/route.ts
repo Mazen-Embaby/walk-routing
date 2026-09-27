@@ -9,14 +9,15 @@ export async function GET(request: Request) {
 
   const country = regionsConfig.countries.find((r: any) => r.code === 'OM');
   const region = country?.regions.find((c: any) => c.id === 'OM_Oman') as any;
-  const feedUrl = region?.dataSources?.gtfsRtTripUpdates;
+  const feedUrl = region?.dataSources?.feeds?.[0]?.gtfsRtTripUpdates;
 
   if (!feedUrl || feedUrl === '') {
-    return NextResponse.json({ error: `No GTFS-RT Trip Updates feed found for region Oman` }, { status: 404 });
+    return NextResponse.json({ error: `No GTFS-RT Trip Updates feed found for region OM_Oman` }, { status: 404 });
   }
 
   try {
     const data = await fetchGtfsRtEtas(feedUrl, routeId, stopId);
+    
     return NextResponse.json(data, {
       status: 200,
       headers: {
@@ -24,7 +25,7 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error('Error fetching Oman ETAs:', error);
+    console.error('Error fetching OM_Oman ETAs:', error);
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }

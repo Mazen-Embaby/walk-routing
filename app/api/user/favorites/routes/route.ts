@@ -12,6 +12,7 @@ export async function GET(req: Request) {
     }
 
     try {
+        console.log('Fetching favorite routes for user:', session.user.id);
         const favorites = await prisma.favoriteRoute.findMany({
             where: { userId: session.user.id },
             select: {
@@ -20,12 +21,13 @@ export async function GET(req: Request) {
                 routeId: true
             }
         });
+        console.log('Favorite routes found:', favorites);
 
         // Format into two lists for the app
         const favoriteRoutes = favorites
             .filter(f => f.routeType === 'transit')
             .map(f => `${f.regionId}|${f.routeId}`);
-            
+
         const favoriteRailTrips = favorites
             .filter(f => f.routeType === 'rail')
             .map(f => `${f.regionId}|${f.routeId}`);

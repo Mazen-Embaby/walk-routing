@@ -34,6 +34,11 @@ export const auth = betterAuth({
     },
     baseURL: process.env.BETTER_AUTH_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'),
     secret: process.env.BETTER_AUTH_SECRET || 'development-secret-key-123',
+    user: {
+        deleteUser: {
+            enabled: true,
+        },
+    },
     socialProviders: {
         google: {
             clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -52,76 +57,78 @@ export const auth = betterAuth({
         ...(process.env.VERCEL_PROJECT_PRODUCTION_URL ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`] : [])
     ], // Include AppInfo.website and Vercel preview URLs
     plugins: [
-        anonymous({
-            onLinkAccount: async ({ anonymousUser, newUser }) => {
-                try {
-                    // 1. Transfer Contributions
-                    await prisma.contribution.updateMany({
-                        where: { userId: anonymousUser.user.id },
-                        data: { userId: newUser.user.id }
-                    });
+        anonymous(
+            //     {
+            //     onLinkAccount: async ({ anonymousUser, newUser }) => {
+            //         try {
+            //             // 1. Transfer Contributions
+            //             await prisma.contribution.updateMany({
+            //                 where: { userId: anonymousUser.user.id },
+            //                 data: { userId: newUser.user.id }
+            //             });
 
-                    // 2. Transfer Favorite Places (No unique constraints, safe to bulk update)
-                    await prisma.favoritePlace.updateMany({
-                        where: { userId: anonymousUser.user.id },
-                        data: { userId: newUser.user.id }
-                    });
+            //             // 2. Transfer Favorite Places (No unique constraints, safe to bulk update)
+            //             await prisma.favoritePlace.updateMany({
+            //                 where: { userId: anonymousUser.user.id },
+            //                 data: { userId: newUser.user.id }
+            //             });
 
-                    // 3. Transfer Favorite Routes
-                    // Routes have a @@unique([userId, routeType, regionId, routeId]) constraint.
-                    // If we bulk update and the new user already has the same route favorited, it will throw an error.
-                    // Instead, we try to update them one-by-one. If it fails, we delete the redundant anonymous record.
-                    const anonRoutes = await prisma.favoriteRoute.findMany({
-                        where: { userId: anonymousUser.user.id },
-                        select: { id: true, routeType: true, regionId: true, routeId: true }
-                    });
+            //             // 3. Transfer Favorite Routes
+            //             // Routes have a @@unique([userId, routeType, regionId, routeId]) constraint.
+            //             // If we bulk update and the new user already has the same route favorited, it will throw an error.
+            //             // Instead, we try to update them one-by-one. If it fails, we delete the redundant anonymous record.
+            //             const anonRoutes = await prisma.favoriteRoute.findMany({
+            //                 where: { userId: anonymousUser.user.id },
+            //                 select: { id: true, routeType: true, regionId: true, routeId: true }
+            //             });
 
-                    if (anonRoutes.length > 0) {
-                        // Fetch the new user's existing routes to check for collisions
-                        const existingRoutes = await prisma.favoriteRoute.findMany({
-                            where: { userId: newUser.user.id },
-                            select: { routeType: true, regionId: true, routeId: true }
-                        });
+            //             if (anonRoutes.length > 0) {
+            //                 // Fetch the new user's existing routes to check for collisions
+            //                 const existingRoutes = await prisma.favoriteRoute.findMany({
+            //                     where: { userId: newUser.user.id },
+            //                     select: { routeType: true, regionId: true, routeId: true }
+            //                 });
 
-                        const existingSet = new Set(
-                            existingRoutes.map(r => `${r.routeType}-${r.regionId}-${r.routeId}`)
-                        );
+            //                 const existingSet = new Set(
+            //                     existingRoutes.map(r => `${r.routeType}-${r.regionId}-${r.routeId}`)
+            //                 );
 
-                        const routesToUpdate: string[] = [];
-                        const routesToDelete: string[] = [];
+            //                 const routesToUpdate: string[] = [];
+            //                 const routesToDelete: string[] = [];
 
-                        for (const route of anonRoutes) {
-                            if (existingSet.has(`${route.routeType}-${route.regionId}-${route.routeId}`)) {
-                                routesToDelete.push(route.id);
-                            } else {
-                                routesToUpdate.push(route.id);
-                                // Add to set to prevent duplicate collisions from within the anonymous routes themselves
-                                existingSet.add(`${route.routeType}-${route.regionId}-${route.routeId}`);
-                            }
-                        }
+            //                 for (const route of anonRoutes) {
+            //                     if (existingSet.has(`${route.routeType}-${route.regionId}-${route.routeId}`)) {
+            //                         routesToDelete.push(route.id);
+            //                     } else {
+            //                         routesToUpdate.push(route.id);
+            //                         // Add to set to prevent duplicate collisions from within the anonymous routes themselves
+            //                         existingSet.add(`${route.routeType}-${route.regionId}-${route.routeId}`);
+            //                     }
+            //                 }
 
-                        // 1. Bulk update all safe routes in one query
-                        if (routesToUpdate.length > 0) {
-                            await prisma.favoriteRoute.updateMany({
-                                where: { id: { in: routesToUpdate } },
-                                data: { userId: newUser.user.id }
-                            });
-                        }
+            //                 // 1. Bulk update all safe routes in one query
+            //                 if (routesToUpdate.length > 0) {
+            //                     await prisma.favoriteRoute.updateMany({
+            //                         where: { id: { in: routesToUpdate } },
+            //                         data: { userId: newUser.user.id }
+            //                     });
+            //                 }
 
-                        // 2. Bulk delete all conflicting anonymous routes in one query
-                        if (routesToDelete.length > 0) {
-                            await prisma.favoriteRoute.deleteMany({
-                                where: { id: { in: routesToDelete } }
-                            });
-                        }
-                    }
+            //                 // 2. Bulk delete all conflicting anonymous routes in one query
+            //                 if (routesToDelete.length > 0) {
+            //                     await prisma.favoriteRoute.deleteMany({
+            //                         where: { id: { in: routesToDelete } }
+            //                     });
+            //                 }
+            //             }
 
-                    console.log(`[AUTH] Successfully linked anonymous user ${anonymousUser.user.id} data to new user ${newUser.user.id}`);
-                } catch (e) {
-                    console.error("[AUTH] Error linking anonymous user data:", e);
-                }
-            }
-        }),
+            //             console.log(`[AUTH] Successfully linked anonymous user ${anonymousUser.user.id} data to new user ${newUser.user.id}`);
+            //         } catch (e) {
+            //             console.error("[AUTH] Error linking anonymous user data:", e);
+            //         }
+            //     }
+            // }
+        ),
         bearer(),
         expo(),
     ],
