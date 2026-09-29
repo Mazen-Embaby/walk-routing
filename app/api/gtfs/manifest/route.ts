@@ -56,6 +56,7 @@ async function handleManifestRequest(request: Request) {
     const region = searchParams.get("region")?.toLowerCase();
     const version = searchParams.get("version")?.toLowerCase();
     const currentVersionStr = searchParams.get("current_version");
+    const checkOnly = searchParams.get("check_only") === "true";
 
     if (!countryCode || !region || version === null || version === "") {
       return NextResponse.json(
@@ -85,11 +86,14 @@ async function handleManifestRequest(request: Request) {
     const proto = request.headers.get("x-forwarded-proto") || "http";
     const origin = host ? `${proto}://${host}` : new URL(request.url).origin;
 
-    // Generate OTTR token for full database download
-    const fullDownloadToken = await generateDownloadToken(
-      request, countryCode, region, resolvedVersion, "full"
-    );
-    const fullDownloadUrl = `${origin}/api/gtfs/download?token=${fullDownloadToken}`;
+    // Generate OTTR token for full database download if not check_only
+    let fullDownloadUrl = "";
+    if (!checkOnly) {
+      const fullDownloadToken = await generateDownloadToken(
+        request, countryCode, region, resolvedVersion, "full"
+      );
+      fullDownloadUrl = `${origin}/api/gtfs/download?token=${fullDownloadToken}`;
+    }
 
     // Build base response
     const response: Record<string, unknown> = {
@@ -117,21 +121,26 @@ async function handleManifestRequest(request: Request) {
           const patchChain = getPatchChain(countryCode, region, currentVersion);
 
           if (patchChain !== null && patchChain.length > 0) {
-            // Patches available — generate OTTR tokens for each patch
+            // Patches available — generate OTTR tokens for each patch if not check_only
             const patchChainWithUrls = await Promise.all(
               patchChain.map(async (patch: PatchInfo) => {
-                const patchToken = await generateDownloadToken(
-                  request,
-                  countryCode,
-                  region,
-                  patch.toVersion.toString(),
-                  "patch",
-                  patch.fromVersion,
-                );
+                let downloadUrl = "";
+                if (!checkOnly) {
+                  const patchToken = await generateDownloadToken(
+                    request,
+                    countryCode,
+                    region,
+                    patch.toVersion.toString(),
+                    "patch",
+                    patch.fromVersion,
+                  );
+                  downloadUrl = `${origin}/api/gtfs/patch?token=${patchToken}`;
+                }
+                
                 return {
                   fromVersion: patch.fromVersion,
                   toVersion: patch.toVersion,
-                  downloadUrl: `${origin}/api/gtfs/patch?token=${patchToken}`,
+                  downloadUrl: downloadUrl,
                   sizeBytes: patch.sizeBytes,
                   sha256: patch.sha256,
                   hmac: patch.hmac,

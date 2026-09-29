@@ -191,8 +191,8 @@ async function handlePatchRequest(request: Request) {
       if (vData.patches) {
         const match = vData.patches.find(
           (p: any) =>
-            p.fromVersion === patchFrom &&
-            p.toVersion === parseInt(version, 10)
+            p.fromVersion?.toString() === patchFrom?.toString() &&
+            p.toVersion?.toString() === version?.toString()
         );
         if (match?.cdnUrl) {
           patchCdnUrl = match.cdnUrl;
